@@ -1,3 +1,4 @@
+import { useBugReportStore } from "@/features/bug-report/store";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -28,6 +29,7 @@ import {
 //El formulario vive dentro de esta funcion
 export function BugReportForm() {
   // Le decimos que controle los datos usando las reglas de bugReportSchema
+  const addReport = useBugReportStore((state) => state.addReport);
   const form = useForm<BugReportFormValues>({
     resolver: zodResolver(bugReportSchema),
     defaultValues: {
@@ -41,11 +43,10 @@ export function BugReportForm() {
 
   // Si el usuario presiona "Enviar" y no hay errores
   function onSubmit(data: BugReportFormValues) {
-    // Por ahora solo lo mostramos en consola.
-    // Después acá llamamos a Zustand para guardar el borrador.
-    console.log("¡Reporte listo para enviar!", data);
+    addReport(data);
+    form.reset();
+    alert("¡Reporte de bug guardado exitosamente en el estado global!");
   }
-
   // Estructura visual
   return (
     <Form {...form}>
