@@ -1,34 +1,29 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
-import type { BugReport } from "./types";
+import { createJSONStorage, persist } from "zustand/middleware";
+import type { BugReportFormValues } from "./schema";
 
+//Definimos el contrato de que datos guardamos y que acciones tenemos
 interface BugReportState {
-  // Partial quiere decir que no todos los campos son obligatorios todavia.
-  draft: Partial<BugReport>;
-  setDraft: (data: Partial<BugReport>) => void;
-  clearDraft: () => void;
+  reports: BugReportFormValues[];
+  addReport: (report: BugReportFormValues) => void;
+  clearReports: () => void;
 }
 
-// Creamos el store global con persistencia
+//Creamos el store persistente en localStorage
 export const useBugReportStore = create<BugReportState>()(
-  // Utilizamos persist para que ademas de guardar el estado en memoria, lo guarde en localStorage
   persist(
     (set) => ({
-      // El estado inicial arranca vacio
-      draft: {},
-
-      // Funcion para actualizar el borrador guardando lo que ya estaba + lo nuevo
-      setDraft: (data) =>
+      reports: [],
+      addReport: (newReport) =>
         set((state) => ({
-          draft: { ...state.draft, ...data },
+          reports: [...state.reports, newReport],
         })),
-
-      // Funcion para limpiar el borrador
-      clearDraft: () => set({ draft: {} }),
+      clearReports: () => set({ reports: [] }),
     }),
-    // Asi se va a llamar la llave en el localStorage del navegador
     {
-      name: "bug-report-storage",
+      // Nombre de la clave en el localStorage
+      name: "bug-reports-storage",
+      storage: createJSONStorage(() => localStorage),
     },
   ),
 );
