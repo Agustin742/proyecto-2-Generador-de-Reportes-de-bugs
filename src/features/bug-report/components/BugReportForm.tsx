@@ -6,7 +6,6 @@ import {
   type BugReportFormValues,
 } from "@/features/bug-report/schema";
 
-// Importamos los ladrillos visuales de shadcn/ui
 import { Button } from "@/shared/components/ui/button";
 import {
   Form,
@@ -17,7 +16,6 @@ import {
   FormMessage,
 } from "@/shared/components/ui/form";
 import { Input } from "@/shared/components/ui/input";
-import { Textarea } from "@/shared/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -25,36 +23,38 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/shared/components/ui/select";
+import { Textarea } from "@/shared/components/ui/textarea";
 
-//El formulario vive dentro de esta funcion
 export function BugReportForm() {
-  // Le decimos que controle los datos usando las reglas de bugReportSchema
   const addReport = useBugReportStore((state) => state.addReport);
   const form = useForm<BugReportFormValues>({
+    mode: "onChange",
     resolver: zodResolver(bugReportSchema),
     defaultValues: {
       title: "",
       description: "",
+      steps: "",
+      expectedResult: "",
+      actualResult: "",
       severity: undefined,
-      environment: undefined,
-      stepsToReproduce: "",
+      priority: undefined,
+      environment: "",
+      tone: undefined,
     },
   });
 
-  // Si el usuario presiona "Enviar" y no hay errores
   function onSubmit(data: BugReportFormValues) {
     addReport(data);
     form.reset();
     alert("¡Reporte de bug guardado exitosamente en el estado global!");
   }
-  // Estructura visual
+
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-6 max-w-2xl mx-auto p-6 border rounded-lg bg-zinc-50/50"
+        className="mx-auto max-w-2xl space-y-6 rounded-lg border bg-zinc-50/50 p-6"
       >
-        {/* Campo: Titulo */}
         <FormField
           control={form.control}
           name="title"
@@ -67,13 +67,11 @@ export function BugReportForm() {
                   {...field}
                 />
               </FormControl>
-              {/* FormMessage es el que muestra el texto en rojo de Zod automáticamente */}
               <FormMessage />
             </FormItem>
           )}
         />
 
-        {/* Campo: Descripción */}
         <FormField
           control={form.control}
           name="description"
@@ -83,7 +81,7 @@ export function BugReportForm() {
               <FormControl>
                 <Textarea
                   placeholder="Explicá en detalle qué pasó y qué esperabas que pasara..."
-                  className="resize-none h-32"
+                  className="h-32 resize-none"
                   {...field}
                 />
               </FormControl>
@@ -92,9 +90,25 @@ export function BugReportForm() {
           )}
         />
 
-        {/* Agrupamos Severidad y Entorno en dos columnas para que quede más prolijo */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Campo: Severidad */}
+        <FormField
+          control={form.control}
+          name="steps"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Pasos para reproducir</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="Describí los pasos para reproducir el bug."
+                  className="h-28 resize-none"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <FormField
             control={form.control}
             name="severity"
@@ -103,7 +117,7 @@ export function BugReportForm() {
                 <FormLabel>Severidad</FormLabel>
                 <Select
                   onValueChange={field.onChange}
-                  defaultValue={field.value}
+                  value={field.value}
                 >
                   <FormControl>
                     <SelectTrigger>
@@ -122,28 +136,25 @@ export function BugReportForm() {
             )}
           />
 
-          {/* Campo: Entorno */}
           <FormField
             control={form.control}
-            name="environment"
+            name="priority"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Entorno</FormLabel>
+                <FormLabel>Prioridad</FormLabel>
                 <Select
                   onValueChange={field.onChange}
-                  defaultValue={field.value}
+                  value={field.value}
                 >
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="¿Dónde ocurrió?" />
+                      <SelectValue placeholder="Seleccioná una prioridad" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="development">
-                      Desarrollo (Local)
-                    </SelectItem>
-                    <SelectItem value="staging">Staging (Pruebas)</SelectItem>
-                    <SelectItem value="production">Producción</SelectItem>
+                    <SelectItem value="low">Baja</SelectItem>
+                    <SelectItem value="medium">Media</SelectItem>
+                    <SelectItem value="high">Alta</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -152,7 +163,90 @@ export function BugReportForm() {
           />
         </div>
 
-        <Button type="submit" className="w-full">
+        <FormField
+          control={form.control}
+          name="environment"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Entorno</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Ej: Producción, staging, Android 13..."
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="tone"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Tono</FormLabel>
+              <Select
+                onValueChange={field.onChange}
+                value={field.value}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Seleccioná un tono" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="formal">Formal</SelectItem>
+                  <SelectItem value="direct">Directo</SelectItem>
+                  <SelectItem value="detailed">Detallado</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="expectedResult"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Resultado esperado</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="Indicá qué debería haber pasado."
+                  className="h-24 resize-none"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="actualResult"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Resultado actual</FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="Indicá qué pasó realmente."
+                  className="h-24 resize-none"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <Button
+          type="submit"
+          className="w-full"
+          disabled={!form.formState.isValid}
+        >
           Crear Reporte de Bug
         </Button>
       </form>
