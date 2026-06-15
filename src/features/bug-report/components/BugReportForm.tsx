@@ -144,7 +144,7 @@ export function BugReportForm() {
                 <FormLabel>Prioridad</FormLabel>
                 <Select
                   onValueChange={field.onChange}
-                  defaultValue={field.value}
+                  value={field.value}
                 >
                   <FormControl>
                     <SelectTrigger>
