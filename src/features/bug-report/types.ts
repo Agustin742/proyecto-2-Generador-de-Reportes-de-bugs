@@ -1,17 +1,11 @@
-export type Severity = "low" | "medium" | "high" | "critical";
-export type Priority = "low" | "medium" | "high";
-export type Tone = "formal" | "direct" | "detailed";
+import type { BugReportFormValues } from "./schema";
+
+export type Severity = BugReportFormValues["severity"];
+export type Priority = BugReportFormValues["priority"];
+export type Tone = BugReportFormValues["tone"];
+
 export type BugTemplate = "visual" | "functional" | "performance";
 
-export type BugReport = {
-  title: string;
-  description: string;
-  steps: string;
-  expectedResult: string;
-  actualResult: string;
-  severity: Severity;
-  priority: Priority;
-  environment: string;
-  tone: Tone;
+export type BugReport = BugReportFormValues & {
   template?: BugTemplate;
 };
