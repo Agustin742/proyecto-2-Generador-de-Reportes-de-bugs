@@ -67,6 +67,9 @@ export function BugReportForm() {
                   {...field}
                 />
               </FormControl>
+              <p className="text-sm text-muted-foreground">
+                Ej: El botón “Guardar” no responde al hacer clic.
+              </p>
               <FormMessage />
             </FormItem>
           )}
@@ -85,6 +88,10 @@ export function BugReportForm() {
                   {...field}
                 />
               </FormControl>
+              <p className="text-sm text-muted-foreground">
+                Contá brevemente qué estaba haciendo el usuario cuando apareció
+                el problema.
+              </p>
               <FormMessage />
             </FormItem>
           )}
@@ -103,6 +110,10 @@ export function BugReportForm() {
                   {...field}
                 />
               </FormControl>
+              <p className="text-sm text-muted-foreground">
+                Escribí los pasos en orden. Ej: 1. Entrar a login. 2. Completar
+                los datos. 3. Hacer clic en “Ingresar”.
+              </p>
               <FormMessage />
             </FormItem>
           )}
@@ -115,10 +126,7 @@ export function BugReportForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Severidad</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  value={field.value}
-                >
+                <Select onValueChange={field.onChange} value={field.value}>
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Seleccioná un nivel" />
@@ -131,6 +139,9 @@ export function BugReportForm() {
                     <SelectItem value="critical">Crítica</SelectItem>
                   </SelectContent>
                 </Select>
+                <p className="text-sm text-muted-foreground">
+                  La severidad indica qué tan fuerte impacta el problema.
+                </p>
                 <FormMessage />
               </FormItem>
             )}
@@ -142,10 +153,7 @@ export function BugReportForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Prioridad</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  value={field.value}
-                >
+                <Select onValueChange={field.onChange} value={field.value}>
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Seleccioná una prioridad" />
@@ -157,6 +165,9 @@ export function BugReportForm() {
                     <SelectItem value="high">Alta</SelectItem>
                   </SelectContent>
                 </Select>
+                <p className="text-sm text-muted-foreground">
+                  La prioridad indica qué tan urgente es resolverlo.
+                </p>
                 <FormMessage />
               </FormItem>
             )}
@@ -175,6 +186,9 @@ export function BugReportForm() {
                   {...field}
                 />
               </FormControl>
+              <p className="text-sm text-muted-foreground">
+                Ej: Chrome 125, Windows 11, ambiente producción.
+              </p>
               <FormMessage />
             </FormItem>
           )}
@@ -186,10 +200,7 @@ export function BugReportForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Tono</FormLabel>
-              <Select
-                onValueChange={field.onChange}
-                value={field.value}
-              >
+              <Select onValueChange={field.onChange} value={field.value}>
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Seleccioná un tono" />
@@ -201,6 +212,9 @@ export function BugReportForm() {
                   <SelectItem value="detailed">Detallado</SelectItem>
                 </SelectContent>
               </Select>
+              <p className="text-sm text-muted-foreground">
+                Elegí cómo querés que se redacte el reporte final.
+              </p>
               <FormMessage />
             </FormItem>
           )}
@@ -219,6 +233,10 @@ export function BugReportForm() {
                   {...field}
                 />
               </FormControl>
+              <p className="text-sm text-muted-foreground">
+                Describí qué debería haber pasado si todo funcionaba
+                correctamente.
+              </p>
               <FormMessage />
             </FormItem>
           )}
@@ -237,6 +255,9 @@ export function BugReportForm() {
                   {...field}
                 />
               </FormControl>
+              <p className="text-sm text-muted-foreground">
+                Describí qué pasó realmente y cómo afectó al usuario.
+              </p>
               <FormMessage />
             </FormItem>
           )}
