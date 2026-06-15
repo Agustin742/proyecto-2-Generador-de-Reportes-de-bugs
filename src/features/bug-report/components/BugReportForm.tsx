@@ -5,6 +5,7 @@ import {
   bugReportSchema,
   type BugReportFormValues,
 } from "@/features/bug-report/schema";
+import { SeverityPriorityHelp } from "@/features/bug-report/components/SeverityPriorityHelp";
 
 import { Button } from "@/shared/components/ui/button";
 import {
@@ -173,6 +174,8 @@ export function BugReportForm() {
             )}
           />
         </div>
+
+        <SeverityPriorityHelp />
 
         <FormField
           control={form.control}
