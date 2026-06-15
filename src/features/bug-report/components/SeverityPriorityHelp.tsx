@@ -1,7 +1,7 @@
 export function SeverityPriorityHelp() {
   return (
     <details className="rounded-lg border bg-muted/30 p-4">
-      <summary className="cursor-pointer text-sm font-semibold">
+      <summary className="cursor-pointer rounded-sm text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
         Guía rápida: severidad vs prioridad
       </summary>
 
