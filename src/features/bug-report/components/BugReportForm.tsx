@@ -5,6 +5,7 @@ import {
   bugReportSchema,
   type BugReportFormValues,
 } from "@/features/bug-report/schema";
+import { BugReportQualityChecklist } from "@/features/bug-report/components/BugReportQualityChecklist";
 import { SeverityPriorityHelp } from "@/features/bug-report/components/SeverityPriorityHelp";
 
 import { Button } from "@/shared/components/ui/button";
@@ -43,6 +44,7 @@ export function BugReportForm() {
       tone: undefined,
     },
   });
+  const watchedValues = form.watch();
 
   function onSubmit(data: BugReportFormValues) {
     addReport(data);
@@ -176,6 +178,8 @@ export function BugReportForm() {
         </div>
 
         <SeverityPriorityHelp />
+
+        <BugReportQualityChecklist values={watchedValues} />
 
         <FormField
           control={form.control}
