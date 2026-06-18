@@ -1,4 +1,8 @@
 import type { BugReportFormValues } from "@/features/bug-report/schema";
+import { toneTemplates } from "./toneTemplates";
+
+const pickTemplate = (templates: readonly string[]): string =>
+  templates[Math.floor(Math.random() * 6)];
 
 export function generateBugReport(values: BugReportFormValues): string {
   const {
@@ -10,35 +14,42 @@ export function generateBugReport(values: BugReportFormValues): string {
     severity,
     priority,
     environment,
+    tone,
   } = values;
+
+  const t = toneTemplates;
+
+  const descriptionHeader = pickTemplate(t.description[tone]);
+  const stepsHeader = pickTemplate(t.steps[tone]);
+  const expectedHeader = pickTemplate(t.expectedResult[tone]);
+  const actualHeader = pickTemplate(t.actualResult[tone]);
+  const severityPriorityHeader = pickTemplate(t.severityPriority[tone]);
+  const environmentHeader = pickTemplate(t.environment[tone]);
 
   return `# ${title}
 
-## Descripción
+${descriptionHeader}
 
 ${description}
 
-## Pasos para reproducir
+${stepsHeader}
 
 ${steps}
 
-## Resultado esperado
+${expectedHeader}
 
 ${expectedResult}
 
-## Resultado actual
+${actualHeader}
 
 ${actualResult}
 
-## Severidad
+${severityPriorityHeader}
 
-${severity}
+- **Severidad:** ${severity}
+- **Prioridad:** ${priority}
 
-## Prioridad
-
-${priority}
-
-## Entorno
+${environmentHeader}
 
 ${environment}
 `;

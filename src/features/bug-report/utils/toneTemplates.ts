@@ -1,0 +1,165 @@
+import type { Tone } from "@/features/bug-report/types";
+
+type ToneSection = Record<Tone, readonly [string, string, string, string, string, string]>;
+
+export const toneTemplates: Record<
+  "description" | "steps" | "expectedResult" | "actualResult" | "severityPriority" | "environment",
+  ToneSection
+> = {
+  description: {
+    formal: [
+      "## Descripción del problema",
+      "## Resumen del incidente",
+      "## Descripción detallada",
+      "## Contexto del defecto",
+      "## Informe del problema",
+      "## Detalle de la anomalía",
+    ],
+    direct: [
+      "## Descripción",
+      "## Qué pasa",
+      "## El problema",
+      "## De qué se trata",
+      "## Resumen rápido",
+      "## El bug",
+    ],
+    detailed: [
+      "## Descripción completa del defecto",
+      "## Análisis detallado del problema",
+      "## Descripción extendida del incidente",
+      "## Informe exhaustivo de la anomalía",
+      "## Contexto y descripción detallada",
+      "## Reporte ampliado del defecto",
+    ],
+  },
+  steps: {
+    formal: [
+      "## Pasos para reproducir el incidente",
+      "## Procedimiento de reproducción",
+      "## Secuencia de reproducción",
+      "## Pasos detallados para reproducir",
+      "## Metodología de reproducción",
+      "## Instrucciones de reproducción",
+    ],
+    direct: [
+      "## Pasos para reproducir",
+      "## Cómo reproducirlo",
+      "## Pasos",
+      "## Reproducir así",
+      "## Secuencia",
+      "## Para reproducirlo",
+    ],
+    detailed: [
+      "## Pasos exhaustivos para reproducir",
+      "## Secuencia detallada de reproducción",
+      "## Procedimiento completo de reproducción",
+      "## Pasos minuciosos para reproducir el defecto",
+      "## Guía detallada de reproducción",
+      "## Reproducción paso a paso extendida",
+    ],
+  },
+  expectedResult: {
+    formal: [
+      "## Resultado esperado",
+      "## Comportamiento esperado",
+      "## Resultación anticipada",
+      "## Resultado previsto",
+      "## Salida esperada",
+      "## Resultado deseable",
+    ],
+    direct: [
+      "## Lo que debería pasar",
+      "## Debería pasar",
+      "## Resultado correcto",
+      "## Lo esperado",
+      "## Cómo debería ser",
+      "## Lo que se esperaba",
+    ],
+    detailed: [
+      "## Resultado esperado en detalle",
+      "## Comportamiento esperado ampliado",
+      "## Resultado previsto y justificado",
+      "## Descripción detallada del resultado esperado",
+      "## Análisis del comportamiento esperado",
+      "## Resultado esperado con contexto",
+    ],
+  },
+  actualResult: {
+    formal: [
+      "## Resultado obtenido",
+      "## Comportamiento observado",
+      "## Resultado real",
+      "## Salida actual",
+      "## Comportamiento presentado",
+      "## Resultación efectiva",
+    ],
+    direct: [
+      "## Lo que pasa",
+      "## Qué pasa en realidad",
+      "## Resultado actual",
+      "## Lo que ocurre",
+      "## Lo real",
+      "## Lo que sucede",
+    ],
+    detailed: [
+      "## Resultado obtenido en detalle",
+      "## Comportamiento observado ampliado",
+      "## Resultado real con contexto",
+      "## Descripción detallada de la anomalía",
+      "## Análisis del comportamiento observado",
+      "## Resultado actual minucioso",
+    ],
+  },
+  severityPriority: {
+    formal: [
+      "## Severidad y prioridad asignadas",
+      "## Clasificación del incidente",
+      "## Severidad y prioridad",
+      "## Evaluación de impacto",
+      "## Categorización del defecto",
+      "## Nivel de severidad y prioridad",
+    ],
+    direct: [
+      "## Severidad y prioridad",
+      "## Clasificación",
+      "## Severidad / prioridad",
+      "## Nivel",
+      "## Impacto",
+      "## Qué tan grave es",
+    ],
+    detailed: [
+      "## Severidad y prioridad detalladas",
+      "## Clasificación exhaustiva del incidente",
+      "## Análisis de severidad y prioridad",
+      "## Evaluación detallada de impacto",
+      "## Categorización ampliada del defecto",
+      "## Severidad y prioridad con justificación",
+    ],
+  },
+  environment: {
+    formal: [
+      "## Entorno de ejecución",
+      "## Ambiente del incidente",
+      "## Entorno donde se reproduce",
+      "## Contexto del entorno",
+      "## Ambiente de reproducción",
+      "## Plataforma de ejecución",
+    ],
+    direct: [
+      "## Entorno",
+      "## Dónde pasa",
+      "## Ambiente",
+      "## Plataforma",
+      "## Dónde se reproduce",
+      "## Sistema",
+    ],
+    detailed: [
+      "## Entorno de ejecución detallado",
+      "## Ambiente completo del incidente",
+      "## Entorno minucioso de reproducción",
+      "## Contexto ampliado del entorno",
+      "## Plataforma y ambiente detallados",
+      "## Especificaciones del entorno",
+    ],
+  },
+};
