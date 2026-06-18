@@ -1,8 +1,13 @@
 import type { BugReportFormValues } from "@/features/bug-report/schema";
+import type { Tone } from "@/features/bug-report/types";
 import { toneTemplates } from "./toneTemplates";
 
-const pickTemplate = (templates: readonly string[]): string =>
-  templates[Math.floor(Math.random() * 6)];
+type SectionKey = keyof typeof toneTemplates;
+
+function pickHeader(section: SectionKey, tone: Tone): string {
+  const templates = toneTemplates[section][tone];
+  return templates[Math.floor(Math.random() * 6)];
+}
 
 export function generateBugReport(values: BugReportFormValues): string {
   const {
@@ -17,40 +22,21 @@ export function generateBugReport(values: BugReportFormValues): string {
     tone,
   } = values;
 
-  const t = toneTemplates;
+  const sections: Array<{ key: SectionKey; value: string }> = [
+    { key: "description", value: description },
+    { key: "steps", value: steps },
+    { key: "expectedResult", value: expectedResult },
+    { key: "actualResult", value: actualResult },
+    {
+      key: "severityPriority",
+      value: `- **Severidad:** ${severity}\n- **Prioridad:** ${priority}`,
+    },
+    { key: "environment", value: environment },
+  ];
 
-  const descriptionHeader = pickTemplate(t.description[tone]);
-  const stepsHeader = pickTemplate(t.steps[tone]);
-  const expectedHeader = pickTemplate(t.expectedResult[tone]);
-  const actualHeader = pickTemplate(t.actualResult[tone]);
-  const severityPriorityHeader = pickTemplate(t.severityPriority[tone]);
-  const environmentHeader = pickTemplate(t.environment[tone]);
+  const body = sections
+    .map(({ key, value }) => `${pickHeader(key, tone)}\n\n${value}`)
+    .join("\n\n");
 
-  return `# ${title}
-
-${descriptionHeader}
-
-${description}
-
-${stepsHeader}
-
-${steps}
-
-${expectedHeader}
-
-${expectedResult}
-
-${actualHeader}
-
-${actualResult}
-
-${severityPriorityHeader}
-
-- **Severidad:** ${severity}
-- **Prioridad:** ${priority}
-
-${environmentHeader}
-
-${environment}
-`;
+  return `# ${title}\n\n${body}\n`;
 }
