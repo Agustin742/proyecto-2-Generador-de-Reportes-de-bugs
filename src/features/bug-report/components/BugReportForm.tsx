@@ -13,6 +13,7 @@ import { Button } from "@/shared/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -64,6 +65,24 @@ function getDetectedEnvironment() {
   return `Navegador: ${browser} | Sistema: ${operatingSystem} | URL: ${currentLocation}`;
 }
 
+function RequiredMark() {
+  return (
+    <span aria-hidden="true" className="text-destructive">
+      {" *"}
+    </span>
+  );
+}
+
+function CharacterCount({ value }: { value?: string }) {
+  const count = value?.length ?? 0;
+
+  if (count === 0) {
+    return null;
+  }
+
+  return <span className="text-sm text-muted-foreground">{count} caracteres</span>;
+}
+
 export function BugReportForm() {
   const addReport = useBugReportStore((state) => state.addReport);
   const form = useForm<BugReportFormValues>({
@@ -98,12 +117,34 @@ export function BugReportForm() {
     });
   }
 
+  function handleClearForm() {
+    const shouldClear = window.confirm(
+      "¿Seguro que querés borrar los datos cargados?",
+    );
+
+    if (!shouldClear) {
+      return;
+    }
+
+    form.reset();
+  }
+
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className="mx-auto max-w-2xl space-y-8 rounded-lg border bg-zinc-50/50 p-6"
       >
+        <div className="space-y-2">
+          <p className="text-sm text-muted-foreground">
+            Los campos marcados con{" "}
+            <span aria-hidden="true" className="text-destructive">
+              *
+            </span>
+            <span className="sr-only"> asterisco</span> son obligatorios.
+          </p>
+        </div>
+
         <section className="space-y-4 rounded-lg border border-border/60 bg-background/60 p-4">
           <div className="space-y-1">
             <h2 className="text-sm font-semibold">Información general</h2>
@@ -118,16 +159,19 @@ export function BugReportForm() {
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Título del bug</FormLabel>
+                  <FormLabel>
+                    Título del bug
+                    <RequiredMark />
+                  </FormLabel>
                   <FormControl>
                     <Input
                       placeholder="Ej: Error al guardar cambios"
                       {...field}
                     />
                   </FormControl>
-                  <p className="text-sm text-muted-foreground">
+                  <FormDescription>
                     Usá un resumen breve del problema y dónde ocurre.
-                  </p>
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -138,7 +182,10 @@ export function BugReportForm() {
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Descripción detallada</FormLabel>
+                  <FormLabel>
+                    Descripción detallada
+                    <RequiredMark />
+                  </FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder="Ej: Al guardar el perfil, la pantalla queda cargando y no confirma los cambios."
@@ -146,10 +193,13 @@ export function BugReportForm() {
                       {...field}
                     />
                   </FormControl>
-                  <p className="text-sm text-muted-foreground">
-                    Contá qué estaba haciendo la persona usuaria cuando apareció
-                    el problema.
-                  </p>
+                  <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+                    <FormDescription>
+                      Contá qué estaba haciendo la persona usuaria cuando apareció
+                      el problema.
+                    </FormDescription>
+                    <CharacterCount value={watchedValues.description} />
+                  </div>
                   <FormMessage />
                 </FormItem>
               )}
@@ -171,7 +221,10 @@ export function BugReportForm() {
               name="steps"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Pasos para reproducir</FormLabel>
+                  <FormLabel>
+                    Pasos para reproducir
+                    <RequiredMark />
+                  </FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder={`1. Entrar a login.
@@ -181,9 +234,12 @@ export function BugReportForm() {
                       {...field}
                     />
                   </FormControl>
-                  <p className="text-sm text-muted-foreground">
-                    Listá los pasos en orden para que otra persona pueda reproducir el bug.
-                  </p>
+                  <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+                    <FormDescription>
+                      Listá los pasos en orden para que otra persona pueda reproducir el bug.
+                    </FormDescription>
+                    <CharacterCount value={watchedValues.steps} />
+                  </div>
                   <FormMessage />
                 </FormItem>
               )}
@@ -194,7 +250,10 @@ export function BugReportForm() {
               name="expectedResult"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Resultado esperado</FormLabel>
+                  <FormLabel>
+                    Resultado esperado
+                    <RequiredMark />
+                  </FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder="Ej: El sistema debería iniciar sesión y mostrar el panel."
@@ -202,9 +261,12 @@ export function BugReportForm() {
                       {...field}
                     />
                   </FormControl>
-                  <p className="text-sm text-muted-foreground">
-                    Describí el comportamiento correcto esperado.
-                  </p>
+                  <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+                    <FormDescription>
+                      Describí el comportamiento correcto esperado.
+                    </FormDescription>
+                    <CharacterCount value={watchedValues.expectedResult} />
+                  </div>
                   <FormMessage />
                 </FormItem>
               )}
@@ -215,7 +277,10 @@ export function BugReportForm() {
               name="actualResult"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Resultado actual</FormLabel>
+                  <FormLabel>
+                    Resultado actual
+                    <RequiredMark />
+                  </FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder="Ej: El botón no responde y la sesión no se inicia."
@@ -223,9 +288,12 @@ export function BugReportForm() {
                       {...field}
                     />
                   </FormControl>
-                  <p className="text-sm text-muted-foreground">
-                    Indicá qué ocurrió realmente y qué vio la persona usuaria.
-                  </p>
+                  <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+                    <FormDescription>
+                      Indicá qué ocurrió realmente y qué vio la persona usuaria.
+                    </FormDescription>
+                    <CharacterCount value={watchedValues.actualResult} />
+                  </div>
                   <FormMessage />
                 </FormItem>
               )}
@@ -248,7 +316,10 @@ export function BugReportForm() {
                 name="severity"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Severidad</FormLabel>
+                    <FormLabel>
+                      Severidad
+                      <RequiredMark />
+                    </FormLabel>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
                         <SelectTrigger>
@@ -262,9 +333,9 @@ export function BugReportForm() {
                         <SelectItem value="critical">Crítica</SelectItem>
                       </SelectContent>
                     </Select>
-                    <p className="text-sm text-muted-foreground">
+                    <FormDescription>
                       Marcá cuánto afecta el problema al uso del producto.
-                    </p>
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -275,7 +346,10 @@ export function BugReportForm() {
                 name="priority"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Prioridad</FormLabel>
+                    <FormLabel>
+                      Prioridad
+                      <RequiredMark />
+                    </FormLabel>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
                         <SelectTrigger>
@@ -288,9 +362,9 @@ export function BugReportForm() {
                         <SelectItem value="high">Alta</SelectItem>
                       </SelectContent>
                     </Select>
-                    <p className="text-sm text-muted-foreground">
+                    <FormDescription>
                       Indicá qué tan pronto conviene resolverlo.
-                    </p>
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -302,7 +376,10 @@ export function BugReportForm() {
               name="tone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Tono</FormLabel>
+                  <FormLabel>
+                    Tono
+                    <RequiredMark />
+                  </FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
@@ -315,9 +392,9 @@ export function BugReportForm() {
                       <SelectItem value="detailed">Detallado</SelectItem>
                     </SelectContent>
                   </Select>
-                  <p className="text-sm text-muted-foreground">
+                  <FormDescription>
                     Elegí cómo querés que se redacte el reporte final.
-                  </p>
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -341,7 +418,10 @@ export function BugReportForm() {
               name="environment"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Entorno</FormLabel>
+                  <FormLabel>
+                    Entorno
+                    <RequiredMark />
+                  </FormLabel>
                   <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
                     <FormControl>
                       <Input
@@ -358,9 +438,12 @@ export function BugReportForm() {
                       Detectar entorno
                     </Button>
                   </div>
-                  <p className="text-sm text-muted-foreground">
-                    Agregá navegador, sistema operativo, dispositivo o URL si aplica.
-                  </p>
+                  <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+                    <FormDescription>
+                      Agregá navegador, sistema operativo, dispositivo o URL si aplica.
+                    </FormDescription>
+                    <CharacterCount value={watchedValues.environment} />
+                  </div>
                   <FormMessage />
                 </FormItem>
               )}
@@ -382,13 +465,24 @@ export function BugReportForm() {
 
             <BugReportQualitySuggestions values={watchedValues} />
 
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={!form.formState.isValid}
-            >
-              Crear Reporte de Bug
-            </Button>
+            <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
+              <Button
+                type="submit"
+                className="w-full sm:w-auto sm:order-2"
+                disabled={!form.formState.isValid}
+              >
+                Crear Reporte de Bug
+              </Button>
+
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleClearForm}
+                className="w-full sm:w-auto sm:order-1"
+              >
+                Limpiar formulario
+              </Button>
+            </div>
           </div>
         </section>
       </form>
