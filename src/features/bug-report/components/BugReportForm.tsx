@@ -175,8 +175,8 @@ export function BugReportForm() {
                   <FormControl>
                     <Textarea
                       placeholder={`1. Entrar a login.
-                                    2. Completar los datos.
-                                    3. Hacer clic en Ingresar.`}
+2. Completar los datos.
+3. Hacer clic en Ingresar.`}
                       className="h-28 resize-none"
                       {...field}
                     />
