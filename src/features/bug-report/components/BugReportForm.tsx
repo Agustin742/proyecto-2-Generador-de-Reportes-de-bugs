@@ -118,15 +118,15 @@ export function BugReportForm() {
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Título del Bug</FormLabel>
+                  <FormLabel>Título del bug</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Ej: El botón de login no funciona..."
+                      placeholder="Ej: Error al guardar cambios"
                       {...field}
                     />
                   </FormControl>
                   <p className="text-sm text-muted-foreground">
-                    Ej: El botón “Guardar” no responde al hacer clic.
+                    Usá un resumen breve del problema y dónde ocurre.
                   </p>
                   <FormMessage />
                 </FormItem>
@@ -141,13 +141,13 @@ export function BugReportForm() {
                   <FormLabel>Descripción detallada</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Explicá en detalle qué pasó y qué esperabas que pasara..."
+                      placeholder="Ej: Al guardar el perfil, la pantalla queda cargando y no confirma los cambios."
                       className="h-32 resize-none"
                       {...field}
                     />
                   </FormControl>
                   <p className="text-sm text-muted-foreground">
-                    Contá brevemente qué estaba haciendo el usuario cuando apareció
+                    Contá qué estaba haciendo la persona usuaria cuando apareció
                     el problema.
                   </p>
                   <FormMessage />
@@ -174,14 +174,15 @@ export function BugReportForm() {
                   <FormLabel>Pasos para reproducir</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Describí los pasos para reproducir el bug."
+                      placeholder={`1. Entrar a login.
+                                    2. Completar los datos.
+                                    3. Hacer clic en Ingresar.`}
                       className="h-28 resize-none"
                       {...field}
                     />
                   </FormControl>
                   <p className="text-sm text-muted-foreground">
-                    Escribí los pasos en orden. Ej: 1. Entrar a login. 2. Completar
-                    los datos. 3. Hacer clic en “Ingresar”.
+                    Listá los pasos en orden para que otra persona pueda reproducir el bug.
                   </p>
                   <FormMessage />
                 </FormItem>
@@ -196,14 +197,13 @@ export function BugReportForm() {
                   <FormLabel>Resultado esperado</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Indicá qué debería haber pasado."
+                      placeholder="Ej: El sistema debería iniciar sesión y mostrar el panel."
                       className="h-24 resize-none"
                       {...field}
                     />
                   </FormControl>
                   <p className="text-sm text-muted-foreground">
-                    Describí qué debería haber pasado si todo funcionaba
-                    correctamente.
+                    Describí el comportamiento correcto esperado.
                   </p>
                   <FormMessage />
                 </FormItem>
@@ -218,13 +218,13 @@ export function BugReportForm() {
                   <FormLabel>Resultado actual</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Indicá qué pasó realmente."
+                      placeholder="Ej: El botón no responde y la sesión no se inicia."
                       className="h-24 resize-none"
                       {...field}
                     />
                   </FormControl>
                   <p className="text-sm text-muted-foreground">
-                    Describí qué pasó realmente y cómo afectó al usuario.
+                    Indicá qué ocurrió realmente y qué vio la persona usuaria.
                   </p>
                   <FormMessage />
                 </FormItem>
@@ -252,7 +252,7 @@ export function BugReportForm() {
                     <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Seleccioná un nivel" />
+                          <SelectValue placeholder="Seleccioná el impacto" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -263,7 +263,7 @@ export function BugReportForm() {
                       </SelectContent>
                     </Select>
                     <p className="text-sm text-muted-foreground">
-                      La severidad indica qué tan fuerte impacta el problema.
+                      Marcá cuánto afecta el problema al uso del producto.
                     </p>
                     <FormMessage />
                   </FormItem>
@@ -279,7 +279,7 @@ export function BugReportForm() {
                     <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Seleccioná una prioridad" />
+                          <SelectValue placeholder="Seleccioná la urgencia" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -289,7 +289,7 @@ export function BugReportForm() {
                       </SelectContent>
                     </Select>
                     <p className="text-sm text-muted-foreground">
-                      La prioridad indica qué tan urgente es resolverlo.
+                      Indicá qué tan pronto conviene resolverlo.
                     </p>
                     <FormMessage />
                   </FormItem>
@@ -306,7 +306,7 @@ export function BugReportForm() {
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Seleccioná un tono" />
+                        <SelectValue placeholder="Seleccioná el estilo" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -345,7 +345,7 @@ export function BugReportForm() {
                   <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
                     <FormControl>
                       <Input
-                        placeholder="Ej: Producción, staging, Android 13..."
+                        placeholder="Ej: Chrome 125 en Windows 11, localhost:5173"
                         {...field}
                       />
                     </FormControl>
@@ -359,7 +359,7 @@ export function BugReportForm() {
                     </Button>
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    Ej: Chrome 125, Windows 11, ambiente producción.
+                    Agregá navegador, sistema operativo, dispositivo o URL si aplica.
                   </p>
                   <FormMessage />
                 </FormItem>
