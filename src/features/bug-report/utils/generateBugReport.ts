@@ -1,15 +1,23 @@
 import type { BugReportFormValues } from "@/features/bug-report/schema";
-import type { Tone } from "@/features/bug-report/types";
-import { toneTemplates } from "./toneTemplates";
+import type { Severity, Priority } from "@/features/bug-report/types";
+import { toneTemplates, type HeaderVariant } from "./toneTemplates";
+
+const severityLabel: Record<Severity, string> = {
+  low: "Baja",
+  medium: "Media",
+  high: "Alta",
+  critical: "Crítica",
+};
+
+const priorityLabel: Record<Priority, string> = {
+  low: "Baja",
+  medium: "Media",
+  high: "Alta",
+};
 
 type SectionKey = keyof typeof toneTemplates;
 
-function pickHeader(section: SectionKey, tone: Tone): string {
-  const templates = toneTemplates[section][tone];
-  return templates[Math.floor(Math.random() * 6)];
-}
-
-export function generateBugReport(values: BugReportFormValues): string {
+export function generateBugReport(values: BugReportFormValues, headerVariant: HeaderVariant = 0): string {
   const {
     title,
     description,
@@ -29,13 +37,13 @@ export function generateBugReport(values: BugReportFormValues): string {
     { key: "actualResult", value: actualResult },
     {
       key: "severityPriority",
-      value: `- **Severidad:** ${severity}\n- **Prioridad:** ${priority}`,
+      value: `- **Severidad:** ${severityLabel[severity]}\n- **Prioridad:** ${priorityLabel[priority]}`,
     },
     { key: "environment", value: environment },
   ];
 
   const body = sections
-    .map(({ key, value }) => `${pickHeader(key, tone)}\n\n${value}`)
+    .map(({ key, value }) => `${toneTemplates[key][tone][headerVariant]}\n\n${value}`)
     .join("\n\n");
 
   return `# ${title}\n\n${body}\n`;

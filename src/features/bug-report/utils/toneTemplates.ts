@@ -1,5 +1,7 @@
 import type { Tone } from "@/features/bug-report/types";
 
+export type HeaderVariant = 0 | 1 | 2 | 3 | 4 | 5;
+
 type ToneSection = Record<Tone, readonly [string, string, string, string, string, string]>;
 
 export const toneTemplates: Record<
@@ -62,7 +64,7 @@ export const toneTemplates: Record<
     formal: [
       "## Resultado esperado",
       "## Comportamiento esperado",
-      "## Resultación anticipada",
+      "## Resultado anticipado",
       "## Resultado previsto",
       "## Salida esperada",
       "## Resultado deseable",
@@ -91,7 +93,7 @@ export const toneTemplates: Record<
       "## Resultado real",
       "## Salida actual",
       "## Comportamiento presentado",
-      "## Resultación efectiva",
+      "## Resultado efectivo",
     ],
     direct: [
       "## Lo que pasa",
