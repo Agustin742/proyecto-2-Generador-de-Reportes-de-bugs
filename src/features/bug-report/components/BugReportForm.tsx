@@ -6,6 +6,7 @@ import {
   type BugReportFormValues,
 } from "@/features/bug-report/schema";
 import { BugReportQualityChecklist } from "@/features/bug-report/components/BugReportQualityChecklist";
+import { BugReportQualitySuggestions } from "@/features/bug-report/components/BugReportQualitySuggestions";
 import { SeverityPriorityHelp } from "@/features/bug-report/components/SeverityPriorityHelp";
 
 import { Button } from "@/shared/components/ui/button";
@@ -378,6 +379,8 @@ export function BugReportForm() {
 
           <div className="space-y-4">
             <BugReportQualityChecklist values={watchedValues} />
+
+            <BugReportQualitySuggestions values={watchedValues} />
 
             <Button
               type="submit"
