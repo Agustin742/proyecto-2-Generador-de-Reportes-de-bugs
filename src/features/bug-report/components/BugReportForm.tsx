@@ -7,6 +7,7 @@ import {
 } from "@/features/bug-report/schema";
 import { BugReportQualityChecklist } from "@/features/bug-report/components/BugReportQualityChecklist";
 import { BugReportQualitySuggestions } from "@/features/bug-report/components/BugReportQualitySuggestions";
+import { BugReportPreview } from "@/features/bug-report/components/BugReportPreview";
 import { SeverityPriorityHelp } from "@/features/bug-report/components/SeverityPriorityHelp";
 
 import { Button } from "@/shared/components/ui/button";
@@ -131,10 +132,11 @@ export function BugReportForm() {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="mx-auto max-w-2xl space-y-8 rounded-lg border bg-zinc-50/50 p-6"
-      >
+      <div className="mx-auto lg:flex lg:items-start lg:gap-6">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="w-full rounded-lg border bg-zinc-50/50 p-6 lg:max-w-2xl"
+        >
         <div className="space-y-2">
           <p className="text-sm text-muted-foreground">
             Los campos marcados con{" "}
@@ -485,7 +487,25 @@ export function BugReportForm() {
             </div>
           </div>
         </section>
+
       </form>
-    </Form>
+
+      <aside className="mt-6 lg:mt-0 lg:w-1/3 lg:sticky lg:top-6">
+        <div className="space-y-4 rounded-3xl border border-border/60 bg-background/60 p-5 shadow-sm">
+          <div className="space-y-2">
+            <h2 className="text-sm font-semibold">Vista previa Markdown</h2>
+            <p className="text-sm text-muted-foreground">
+              El reporte se actualiza en vivo con lo que completes arriba.
+            </p>
+          </div>
+
+          <BugReportPreview
+            values={watchedValues}
+            className="rounded-xl border border-border/70 bg-white p-4"
+          />
+        </div>
+      </aside>
+    </div>
+  </Form>
   );
 }
