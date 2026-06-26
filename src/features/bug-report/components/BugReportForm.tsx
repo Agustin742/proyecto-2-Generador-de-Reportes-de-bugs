@@ -135,7 +135,7 @@ export function BugReportForm() {
       <div className="mx-auto lg:flex lg:items-start lg:gap-6">
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="w-full rounded-lg border bg-zinc-50/50 p-6 lg:max-w-2xl"
+          className="w-full space-y-8 rounded-lg border bg-zinc-50/50 p-6 lg:max-w-2xl"
         >
         <div className="space-y-2">
           <p className="text-sm text-muted-foreground">
@@ -325,7 +325,7 @@ export function BugReportForm() {
                     <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Seleccioná el impacto" />
+                          <SelectValue placeholder="Seleccioná la severidad" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -355,7 +355,7 @@ export function BugReportForm() {
                     <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Seleccioná la urgencia" />
+                          <SelectValue placeholder="Seleccioná la prioridad" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>

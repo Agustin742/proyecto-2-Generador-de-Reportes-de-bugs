@@ -11,20 +11,6 @@ type BugReportPreviewProps = {
   className?: string;
 };
 
-function normalizeValues(values: Partial<BugReportFormValues>): BugReportFormValues {
-  return {
-    title: values.title ?? "",
-    description: values.description ?? "",
-    steps: values.steps ?? "",
-    expectedResult: values.expectedResult ?? "",
-    actualResult: values.actualResult ?? "",
-    severity: values.severity ?? "low",
-    priority: values.priority ?? "low",
-    environment: values.environment ?? "",
-    tone: values.tone ?? "formal",
-  };
-}
-
 export function BugReportPreview({
   values,
   headerVariant = 0,
@@ -32,14 +18,17 @@ export function BugReportPreview({
 }: BugReportPreviewProps) {
   const [mode, setMode] = useState<"raw" | "rendered">("raw");
 
-  const markdown = generateBugReport(normalizeValues(values), headerVariant);
+  const markdown = generateBugReport(values, headerVariant);
   const hasAnyValue = Boolean(
     values.title ||
       values.description ||
       values.steps ||
       values.expectedResult ||
       values.actualResult ||
-      values.environment,
+      values.environment ||
+      values.severity ||
+      values.priority ||
+      values.tone,
   );
 
   return (
