@@ -17,18 +17,25 @@ const priorityLabel: Record<Priority, string> = {
 
 type SectionKey = keyof typeof toneTemplates;
 
-export function generateBugReport(values: BugReportFormValues, headerVariant: HeaderVariant = 0): string {
+export function generateBugReport(
+  values: Partial<BugReportFormValues>,
+  headerVariant: HeaderVariant = 0,
+): string {
   const {
-    title,
-    description,
-    steps,
-    expectedResult,
-    actualResult,
+    title = "",
+    description = "",
+    steps = "",
+    expectedResult = "",
+    actualResult = "",
     severity,
     priority,
-    environment,
+    environment = "",
     tone,
   } = values;
+
+  const selectedTone = tone ?? "formal";
+  const severityText = severity ? severityLabel[severity] : "No seleccionado";
+  const priorityText = priority ? priorityLabel[priority] : "No seleccionado";
 
   const sections: Array<{ key: SectionKey; value: string }> = [
     { key: "description", value: description },
@@ -37,13 +44,13 @@ export function generateBugReport(values: BugReportFormValues, headerVariant: He
     { key: "actualResult", value: actualResult },
     {
       key: "severityPriority",
-      value: `- **Severidad:** ${severityLabel[severity]}\n- **Prioridad:** ${priorityLabel[priority]}`,
+      value: `- **Severidad:** ${severityText}\n- **Prioridad:** ${priorityText}`,
     },
     { key: "environment", value: environment },
   ];
 
   const body = sections
-    .map(({ key, value }) => `${toneTemplates[key][tone][headerVariant]}\n\n${value}`)
+    .map(({ key, value }) => `${toneTemplates[key][selectedTone][headerVariant]}\n\n${value}`)
     .join("\n\n");
 
   return `# ${title}\n\n${body}\n`;
