@@ -9,6 +9,7 @@ import { BugReportQualityChecklist } from "@/features/bug-report/components/BugR
 import { BugReportQualitySuggestions } from "@/features/bug-report/components/BugReportQualitySuggestions";
 import { BugReportPreview } from "@/features/bug-report/components/BugReportPreview";
 import { SeverityPriorityHelp } from "@/features/bug-report/components/SeverityPriorityHelp";
+import { TemplateSelector } from "@/features/bug-report/components/TemplateSelector";
 
 import { Button } from "@/shared/components/ui/button";
 import {
@@ -208,6 +209,9 @@ export function BugReportForm() {
             />
           </div>
         </section>
+
+           {/* selector de plantillas que puse en el inicio */}
+          <TemplateSelector setValue={form.setValue} />
 
         <section className="space-y-4 rounded-lg border border-border/60 bg-background/60 p-4">
           <div className="space-y-1">
