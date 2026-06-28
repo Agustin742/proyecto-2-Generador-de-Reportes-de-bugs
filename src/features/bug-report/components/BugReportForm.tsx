@@ -1,5 +1,5 @@
 import { useBugReportStore } from "@/features/bug-report/store";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   bugReportSchema,
@@ -102,7 +102,9 @@ export function BugReportForm() {
       tone: undefined,
     },
   });
-  const watchedValues = form.watch();
+  const watchedValues = useWatch({
+    control: form.control,
+  });
 
   function onSubmit(data: BugReportFormValues) {
     addReport(data);

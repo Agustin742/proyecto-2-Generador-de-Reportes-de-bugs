@@ -1,7 +1,7 @@
 import type { BugReportFormValues } from "@/features/bug-report/schema";
 
 type BugReportQualityChecklistProps = {
-  values: BugReportFormValues;
+  values: Partial<BugReportFormValues>;
 };
 
 export function BugReportQualityChecklist({
@@ -10,27 +10,27 @@ export function BugReportQualityChecklist({
   const checklistItems = [
     {
       label: "Título claro",
-      completed: values.title.trim().length > 0,
+      completed: (values.title ?? "").trim().length > 0,
     },
     {
       label: "Descripción agregada",
-      completed: values.description.trim().length > 0,
+      completed: (values.description ?? "").trim().length > 0,
     },
     {
       label: "Pasos para reproducir",
-      completed: values.steps.trim().length > 0,
+      completed: (values.steps ?? "").trim().length > 0,
     },
     {
       label: "Resultado esperado",
-      completed: values.expectedResult.trim().length > 0,
+      completed: (values.expectedResult ?? "").trim().length > 0,
     },
     {
       label: "Resultado actual",
-      completed: values.actualResult.trim().length > 0,
+      completed: (values.actualResult ?? "").trim().length > 0,
     },
     {
       label: "Entorno indicado",
-      completed: values.environment.trim().length > 0,
+      completed: (values.environment ?? "").trim().length > 0,
     },
     {
       label: "Severidad seleccionada",

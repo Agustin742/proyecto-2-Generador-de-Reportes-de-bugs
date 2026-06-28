@@ -1,7 +1,7 @@
 import type { BugReportFormValues } from "@/features/bug-report/schema";
 
 type BugReportQualitySuggestionsProps = {
-  values: BugReportFormValues;
+  values: Partial<BugReportFormValues>;
 };
 
 const genericEnvironmentValues = new Set([
@@ -59,21 +59,25 @@ export function BugReportQualitySuggestions({
   values,
 }: BugReportQualitySuggestionsProps) {
   const suggestions: string[] = [];
+  const steps = values.steps ?? "";
+  const expectedResult = values.expectedResult ?? "";
+  const actualResult = values.actualResult ?? "";
+  const environment = values.environment ?? "";
 
   const hasMinimumInformation =
-    values.steps.trim().length > 0 &&
-    values.expectedResult.trim().length > 0 &&
-    values.actualResult.trim().length > 0 &&
-    values.environment.trim().length > 0;
+    steps.trim().length > 0 &&
+    expectedResult.trim().length > 0 &&
+    actualResult.trim().length > 0 &&
+    environment.trim().length > 0;
 
-  if (values.steps.trim().length > 0 && !hasListedSteps(values.steps)) {
+  if (steps.trim().length > 0 && !hasListedSteps(steps)) {
     suggestions.push(
       "Sugerencia: escribí los pasos numerados o en lista para facilitar la reproducción del bug.",
     );
   }
 
-  const normalizedExpectedResult = values.expectedResult.trim().toLowerCase();
-  const normalizedActualResult = values.actualResult.trim().toLowerCase();
+  const normalizedExpectedResult = expectedResult.trim().toLowerCase();
+  const normalizedActualResult = actualResult.trim().toLowerCase();
 
   if (
     normalizedExpectedResult.length > 0 &&
@@ -86,8 +90,8 @@ export function BugReportQualitySuggestions({
   }
 
   if (
-    values.environment.trim().length > 0 &&
-    isGenericEnvironment(values.environment)
+    environment.trim().length > 0 &&
+    isGenericEnvironment(environment)
   ) {
     suggestions.push(
       "Sugerencia: agregá navegador, sistema operativo, dispositivo o URL al entorno.",
