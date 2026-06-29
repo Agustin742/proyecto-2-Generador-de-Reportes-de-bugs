@@ -1,3 +1,4 @@
+import { BUG_REPORT_FIELD_LIMITS } from "@/features/bug-report/constants/bugReportValidation";
 import type { BugReportFormValues } from "@/features/bug-report/schema";
 
 export type BugReportQualityValues = Partial<BugReportFormValues>;
@@ -80,27 +81,39 @@ export function getBugReportQualityChecklistItems(
   return [
     {
       label: "Título claro",
-      completed: hasMinimumLength(values.title, 3),
+      completed: hasMinimumLength(values.title, BUG_REPORT_FIELD_LIMITS.title.min),
     },
     {
       label: "Descripción agregada",
-      completed: hasMinimumLength(values.description, 20),
+      completed: hasMinimumLength(
+        values.description,
+        BUG_REPORT_FIELD_LIMITS.description.min,
+      ),
     },
     {
       label: "Pasos para reproducir",
-      completed: hasMinimumLength(values.steps, 10),
+      completed: hasMinimumLength(values.steps, BUG_REPORT_FIELD_LIMITS.steps.min),
     },
     {
       label: "Resultado esperado",
-      completed: hasMinimumLength(values.expectedResult, 5),
+      completed: hasMinimumLength(
+        values.expectedResult,
+        BUG_REPORT_FIELD_LIMITS.expectedResult.min,
+      ),
     },
     {
       label: "Resultado actual",
-      completed: hasMinimumLength(values.actualResult, 5),
+      completed: hasMinimumLength(
+        values.actualResult,
+        BUG_REPORT_FIELD_LIMITS.actualResult.min,
+      ),
     },
     {
       label: "Entorno indicado",
-      completed: hasMinimumLength(values.environment, 3),
+      completed: hasMinimumLength(
+        values.environment,
+        BUG_REPORT_FIELD_LIMITS.environment.min,
+      ),
     },
     {
       label: "Severidad seleccionada",
@@ -127,12 +140,24 @@ export function hasMinimumInformationForQualitySuggestions(
   values: BugReportQualityValues,
 ) {
   return (
-    hasMinimumLength(values.title, 3) &&
-    hasMinimumLength(values.description, 20) &&
-    hasMinimumLength(values.steps, 10) &&
-    hasMinimumLength(values.expectedResult, 5) &&
-    hasMinimumLength(values.actualResult, 5) &&
-    hasMinimumLength(values.environment, 3) &&
+    hasMinimumLength(values.title, BUG_REPORT_FIELD_LIMITS.title.min) &&
+    hasMinimumLength(
+      values.description,
+      BUG_REPORT_FIELD_LIMITS.description.min,
+    ) &&
+    hasMinimumLength(values.steps, BUG_REPORT_FIELD_LIMITS.steps.min) &&
+    hasMinimumLength(
+      values.expectedResult,
+      BUG_REPORT_FIELD_LIMITS.expectedResult.min,
+    ) &&
+    hasMinimumLength(
+      values.actualResult,
+      BUG_REPORT_FIELD_LIMITS.actualResult.min,
+    ) &&
+    hasMinimumLength(
+      values.environment,
+      BUG_REPORT_FIELD_LIMITS.environment.min,
+    ) &&
     hasSelectedValue(values.severity) &&
     hasSelectedValue(values.priority) &&
     hasSelectedValue(values.tone)
