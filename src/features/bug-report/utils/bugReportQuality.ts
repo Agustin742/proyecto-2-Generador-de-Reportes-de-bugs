@@ -32,6 +32,14 @@ const technicalEnvironmentHints = [
   "localhost",
 ];
 
+function hasMinimumLength(value: string | undefined, minLength: number) {
+  return normalizeOptionalString(value).trim().length >= minLength;
+}
+
+function hasSelectedValue<T>(value: T | undefined) {
+  return Boolean(value);
+}
+
 export function normalizeOptionalString(value?: string) {
   return value ?? "";
 }
@@ -72,40 +80,39 @@ export function getBugReportQualityChecklistItems(
   return [
     {
       label: "Título claro",
-      completed: normalizeOptionalString(values.title).trim().length > 0,
+      completed: hasMinimumLength(values.title, 3),
     },
     {
       label: "Descripción agregada",
-      completed: normalizeOptionalString(values.description).trim().length > 0,
+      completed: hasMinimumLength(values.description, 20),
     },
     {
       label: "Pasos para reproducir",
-      completed: normalizeOptionalString(values.steps).trim().length > 0,
+      completed: hasMinimumLength(values.steps, 10),
     },
     {
       label: "Resultado esperado",
-      completed:
-        normalizeOptionalString(values.expectedResult).trim().length > 0,
+      completed: hasMinimumLength(values.expectedResult, 5),
     },
     {
       label: "Resultado actual",
-      completed: normalizeOptionalString(values.actualResult).trim().length > 0,
+      completed: hasMinimumLength(values.actualResult, 5),
     },
     {
       label: "Entorno indicado",
-      completed: normalizeOptionalString(values.environment).trim().length > 0,
+      completed: hasMinimumLength(values.environment, 3),
     },
     {
       label: "Severidad seleccionada",
-      completed: Boolean(values.severity),
+      completed: hasSelectedValue(values.severity),
     },
     {
       label: "Prioridad seleccionada",
-      completed: Boolean(values.priority),
+      completed: hasSelectedValue(values.priority),
     },
     {
       label: "Tono seleccionado",
-      completed: Boolean(values.tone),
+      completed: hasSelectedValue(values.tone),
     },
   ];
 }
@@ -120,10 +127,15 @@ export function hasMinimumInformationForQualitySuggestions(
   values: BugReportQualityValues,
 ) {
   return (
-    normalizeOptionalString(values.steps).trim().length > 0 &&
-    normalizeOptionalString(values.expectedResult).trim().length > 0 &&
-    normalizeOptionalString(values.actualResult).trim().length > 0 &&
-    normalizeOptionalString(values.environment).trim().length > 0
+    hasMinimumLength(values.title, 3) &&
+    hasMinimumLength(values.description, 20) &&
+    hasMinimumLength(values.steps, 10) &&
+    hasMinimumLength(values.expectedResult, 5) &&
+    hasMinimumLength(values.actualResult, 5) &&
+    hasMinimumLength(values.environment, 3) &&
+    hasSelectedValue(values.severity) &&
+    hasSelectedValue(values.priority) &&
+    hasSelectedValue(values.tone)
   );
 }
 
