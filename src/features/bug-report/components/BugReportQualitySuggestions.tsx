@@ -15,12 +15,20 @@ export function BugReportQualitySuggestions({
   const hasMinimumInformation =
     hasMinimumInformationForQualitySuggestions(values);
   const hasSuggestions = suggestions.length > 0;
+  const liveMessage = hasSuggestions
+    ? `${suggestions.length} sugerencias activas para mejorar el reporte.`
+    : hasMinimumInformation
+      ? "El reporte se ve claro y completo."
+      : "Completá el reporte para recibir sugerencias de mejora.";
 
   return (
-    <section className="rounded-lg border bg-muted/30 p-4" aria-live="polite">
+    <section className="rounded-lg border bg-muted/30 p-4">
       <div className="space-y-1">
         <h2 className="text-sm font-semibold">Sugerencias para mejorar</h2>
       </div>
+      <p className="sr-only" aria-live="polite">
+        {liveMessage}
+      </p>
 
       {hasSuggestions ? (
         <ul className="mt-3 space-y-2 text-sm">

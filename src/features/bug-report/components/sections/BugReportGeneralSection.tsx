@@ -44,7 +44,11 @@ export function BugReportGeneralSection({
                 <RequiredMark />
               </FormLabel>
               <FormControl>
-                <Input placeholder="Ej: Error al guardar cambios" {...field} />
+                <Input
+                  aria-required="true"
+                  placeholder="Ej: Error al guardar cambios"
+                  {...field}
+                />
               </FormControl>
               <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
                 <FormDescription>
@@ -71,6 +75,7 @@ export function BugReportGeneralSection({
               </FormLabel>
               <FormControl>
                 <Textarea
+                  aria-required="true"
                   placeholder="Ej: Al guardar el perfil, la pantalla queda cargando y no confirma los cambios."
                   className="h-32 resize-none"
                   {...field}

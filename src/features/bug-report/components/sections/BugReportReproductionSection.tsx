@@ -44,6 +44,7 @@ export function BugReportReproductionSection({
               </FormLabel>
               <FormControl>
                 <Textarea
+                  aria-required="true"
                   placeholder={`1. Entrar a login.
 2. Completar los datos.
 3. Hacer clic en Ingresar.`}
@@ -77,6 +78,7 @@ export function BugReportReproductionSection({
               </FormLabel>
               <FormControl>
                 <Textarea
+                  aria-required="true"
                   placeholder="Ej: El sistema debería iniciar sesión y mostrar el panel."
                   className="h-24 resize-none"
                   {...field}
@@ -107,6 +109,7 @@ export function BugReportReproductionSection({
               </FormLabel>
               <FormControl>
                 <Textarea
+                  aria-required="true"
                   placeholder="Ej: El botón no responde y la sesión no se inicia."
                   className="h-24 resize-none"
                   {...field}

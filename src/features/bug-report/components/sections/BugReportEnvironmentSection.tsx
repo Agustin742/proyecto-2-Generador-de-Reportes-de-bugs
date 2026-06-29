@@ -48,6 +48,7 @@ export function BugReportEnvironmentSection({
               <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
                 <FormControl>
                   <Input
+                    aria-required="true"
                     placeholder="Ej: Chrome 125 en Windows 11, localhost:5173"
                     {...field}
                   />
