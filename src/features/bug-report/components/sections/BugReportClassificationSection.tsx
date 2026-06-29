@@ -48,7 +48,7 @@ export function BugReportClassificationSection({
                 </FormLabel>
                 <Select onValueChange={field.onChange} value={field.value}>
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger aria-required="true">
                       <SelectValue placeholder="Seleccioná la severidad" />
                     </SelectTrigger>
                   </FormControl>
@@ -78,7 +78,7 @@ export function BugReportClassificationSection({
                 </FormLabel>
                 <Select onValueChange={field.onChange} value={field.value}>
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger aria-required="true">
                       <SelectValue placeholder="Seleccioná la prioridad" />
                     </SelectTrigger>
                   </FormControl>
@@ -108,7 +108,7 @@ export function BugReportClassificationSection({
               </FormLabel>
               <Select onValueChange={field.onChange} value={field.value}>
                 <FormControl>
-                  <SelectTrigger>
+                  <SelectTrigger aria-required="true">
                     <SelectValue placeholder="Seleccioná el estilo" />
                   </SelectTrigger>
                 </FormControl>

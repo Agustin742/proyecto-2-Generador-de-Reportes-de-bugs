@@ -6,7 +6,7 @@ type CharacterCountProps = {
 export function CharacterCount({ value, max }: CharacterCountProps) {
   const count = value?.trim().length ?? 0;
 
-  if (count === 0) {
+  if (typeof max !== "number" && count === 0) {
     return null;
   }
 
