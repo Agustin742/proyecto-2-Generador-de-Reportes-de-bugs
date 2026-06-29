@@ -1,58 +1,21 @@
 import type { BugReportFormValues } from "@/features/bug-report/schema";
+import {
+  getBugReportQualityChecklistItems,
+  getBugReportQualityCompletedCount,
+} from "@/features/bug-report/utils/bugReportQuality";
 
 type BugReportQualityChecklistProps = {
-  values: BugReportFormValues;
+  values: Partial<BugReportFormValues>;
 };
 
 export function BugReportQualityChecklist({
   values,
 }: BugReportQualityChecklistProps) {
-  const checklistItems = [
-    {
-      label: "Título claro",
-      completed: values.title.trim().length > 0,
-    },
-    {
-      label: "Descripción agregada",
-      completed: values.description.trim().length > 0,
-    },
-    {
-      label: "Pasos para reproducir",
-      completed: values.steps.trim().length > 0,
-    },
-    {
-      label: "Resultado esperado",
-      completed: values.expectedResult.trim().length > 0,
-    },
-    {
-      label: "Resultado actual",
-      completed: values.actualResult.trim().length > 0,
-    },
-    {
-      label: "Entorno indicado",
-      completed: values.environment.trim().length > 0,
-    },
-    {
-      label: "Severidad seleccionada",
-      completed: Boolean(values.severity),
-    },
-    {
-      label: "Prioridad seleccionada",
-      completed: Boolean(values.priority),
-    },
-    {
-      label: "Tono seleccionado",
-      completed: Boolean(values.tone),
-    },
-  ];
-
-  const completedCount = checklistItems.filter((item) => item.completed).length;
+  const checklistItems = getBugReportQualityChecklistItems(values);
+  const completedCount = getBugReportQualityCompletedCount(checklistItems);
 
   return (
-    <section
-      className="rounded-lg border bg-muted/30 p-4"
-      aria-live="polite"
-    >
+    <section className="rounded-lg border bg-muted/30 p-4" aria-live="polite">
       <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
         <h2 className="text-sm font-semibold">Calidad del reporte</h2>
         <p className="text-sm text-muted-foreground">

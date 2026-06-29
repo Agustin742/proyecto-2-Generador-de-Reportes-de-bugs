@@ -1,99 +1,19 @@
 import type { BugReportFormValues } from "@/features/bug-report/schema";
+import {
+  getBugReportQualitySuggestions,
+  hasMinimumInformationForQualitySuggestions,
+} from "@/features/bug-report/utils/bugReportQuality";
 
 type BugReportQualitySuggestionsProps = {
-  values: BugReportFormValues;
+  values: Partial<BugReportFormValues>;
 };
-
-const genericEnvironmentValues = new Set([
-  "produccion",
-  "producción",
-  "production",
-  "staging",
-  "dev",
-  "desarrollo",
-  "testing",
-  "test",
-]);
-
-const technicalEnvironmentHints = [
-  "chrome",
-  "firefox",
-  "edge",
-  "safari",
-  "windows",
-  "mac",
-  "linux",
-  "android",
-  "ios",
-  "http",
-  "localhost",
-];
-
-function hasListedSteps(steps: string) {
-  return steps
-    .split(/\r?\n/)
-    .some((line) => /^(\s*(\d+[.)]|[-*]))\s+/.test(line));
-}
-
-function isGenericEnvironment(environment: string) {
-  const normalizedEnvironment = environment.trim().toLowerCase();
-
-  if (!normalizedEnvironment) {
-    return false;
-  }
-
-  if (genericEnvironmentValues.has(normalizedEnvironment)) {
-    return true;
-  }
-
-  const hasTechnicalHint = technicalEnvironmentHints.some((hint) =>
-    normalizedEnvironment.includes(hint),
-  );
-
-  const wordCount = normalizedEnvironment.split(/\s+/).filter(Boolean).length;
-
-  return wordCount < 3 && !hasTechnicalHint;
-}
 
 export function BugReportQualitySuggestions({
   values,
 }: BugReportQualitySuggestionsProps) {
-  const suggestions: string[] = [];
-
+  const suggestions = getBugReportQualitySuggestions(values);
   const hasMinimumInformation =
-    values.steps.trim().length > 0 &&
-    values.expectedResult.trim().length > 0 &&
-    values.actualResult.trim().length > 0 &&
-    values.environment.trim().length > 0;
-
-  if (values.steps.trim().length > 0 && !hasListedSteps(values.steps)) {
-    suggestions.push(
-      "Sugerencia: escribí los pasos numerados o en lista para facilitar la reproducción del bug.",
-    );
-  }
-
-  const normalizedExpectedResult = values.expectedResult.trim().toLowerCase();
-  const normalizedActualResult = values.actualResult.trim().toLowerCase();
-
-  if (
-    normalizedExpectedResult.length > 0 &&
-    normalizedActualResult.length > 0 &&
-    normalizedExpectedResult === normalizedActualResult
-  ) {
-    suggestions.push(
-      "Sugerencia: diferenciá el resultado esperado del resultado actual para que el reporte sea más claro.",
-    );
-  }
-
-  if (
-    values.environment.trim().length > 0 &&
-    isGenericEnvironment(values.environment)
-  ) {
-    suggestions.push(
-      "Sugerencia: agregá navegador, sistema operativo, dispositivo o URL al entorno.",
-    );
-  }
-
+    hasMinimumInformationForQualitySuggestions(values);
   const hasSuggestions = suggestions.length > 0;
 
   return (
