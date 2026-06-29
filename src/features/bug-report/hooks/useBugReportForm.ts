@@ -5,10 +5,13 @@ import {
 } from "@/features/bug-report/schema";
 import { useBugReportStore } from "@/features/bug-report/store";
 import { getDetectedEnvironment } from "@/features/bug-report/utils/detectEnvironment";
+import { useEffect, useRef, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 
 export function useBugReportForm() {
   const addReport = useBugReportStore((state) => state.addReport);
+  const [saveFeedback, setSaveFeedback] = useState<string | null>(null);
+  const feedbackTimeoutRef = useRef<number | null>(null);
 
   const form = useForm<BugReportFormValues>({
     mode: "onChange",
@@ -30,10 +33,40 @@ export function useBugReportForm() {
     control: form.control,
   });
 
+  useEffect(() => {
+    return () => {
+      if (feedbackTimeoutRef.current !== null) {
+        window.clearTimeout(feedbackTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  function showSaveFeedback(message: string) {
+    setSaveFeedback(message);
+
+    if (feedbackTimeoutRef.current !== null) {
+      window.clearTimeout(feedbackTimeoutRef.current);
+    }
+
+    feedbackTimeoutRef.current = window.setTimeout(() => {
+      setSaveFeedback(null);
+      feedbackTimeoutRef.current = null;
+    }, 8000);
+  }
+
+  function dismissSaveFeedback() {
+    if (feedbackTimeoutRef.current !== null) {
+      window.clearTimeout(feedbackTimeoutRef.current);
+      feedbackTimeoutRef.current = null;
+    }
+
+    setSaveFeedback(null);
+  }
+
   function onSubmit(data: BugReportFormValues) {
     addReport(data);
     form.reset();
-    alert("¡Reporte de bug guardado exitosamente en el estado global!");
+    showSaveFeedback("Reporte guardado correctamente.");
   }
 
   function handleDetectEnvironment() {
@@ -46,20 +79,15 @@ export function useBugReportForm() {
   }
 
   function handleClearForm() {
-    const shouldClear = window.confirm(
-      "¿Seguro que querés borrar los datos cargados?",
-    );
-
-    if (!shouldClear) {
-      return;
-    }
-
+    dismissSaveFeedback();
     form.reset();
   }
 
   return {
     form,
     watchedValues,
+    saveFeedback,
+    dismissSaveFeedback,
     onSubmit,
     handleDetectEnvironment,
     handleClearForm,

@@ -46,7 +46,7 @@ export function BugReportClassificationSection({
                   Severidad
                   <RequiredMark />
                 </FormLabel>
-                <Select onValueChange={field.onChange} value={field.value}>
+                <Select onValueChange={field.onChange} value={field.value ?? ""}>
                   <FormControl>
                     <SelectTrigger aria-required="true">
                       <SelectValue placeholder="Seleccioná la severidad" />
@@ -76,7 +76,7 @@ export function BugReportClassificationSection({
                   Prioridad
                   <RequiredMark />
                 </FormLabel>
-                <Select onValueChange={field.onChange} value={field.value}>
+                <Select onValueChange={field.onChange} value={field.value ?? ""}>
                   <FormControl>
                     <SelectTrigger aria-required="true">
                       <SelectValue placeholder="Seleccioná la prioridad" />
@@ -106,7 +106,7 @@ export function BugReportClassificationSection({
                 Tono
                 <RequiredMark />
               </FormLabel>
-              <Select onValueChange={field.onChange} value={field.value}>
+              <Select onValueChange={field.onChange} value={field.value ?? ""}>
                 <FormControl>
                   <SelectTrigger aria-required="true">
                     <SelectValue placeholder="Seleccioná el estilo" />
