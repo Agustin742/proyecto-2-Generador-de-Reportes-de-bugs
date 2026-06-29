@@ -1,8 +1,8 @@
 import type { BugReportFormValues } from "../schema";
 import type { BugTemplate } from "../types";
 
-export function applyTemplate(template: BugTemplate): Partial<BugReportFormValues> {
-  const templates: Record<BugTemplate, Partial<BugReportFormValues>> = {
+
+  const BUG_TEMPLATES_MAP:Record<BugTemplate, Partial<BugReportFormValues>> = {
     visual: {
       title: "[Visual] - Desalineación en...",
       description: "Se detectó un error estético en la interfaz gráfica.",
@@ -25,6 +25,6 @@ export function applyTemplate(template: BugTemplate): Partial<BugReportFormValue
       actualResult: "La interfaz experimenta un lag prolongado y bloquea temporalmente el navegador."
     }
   };
-
-  return templates[template];
+export function applyTemplate(template: BugTemplate): Partial<BugReportFormValues> {
+  return BUG_TEMPLATES_MAP[template];
 }

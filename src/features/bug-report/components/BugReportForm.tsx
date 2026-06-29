@@ -10,6 +10,7 @@ import { BugReportQualitySuggestions } from "@/features/bug-report/components/Bu
 import { BugReportPreview } from "@/features/bug-report/components/BugReportPreview";
 import { SeverityPriorityHelp } from "@/features/bug-report/components/SeverityPriorityHelp";
 import { TemplateSelector } from "@/features/bug-report/components/TemplateSelector";
+import { ToneSelector } from "./ToneSelector";
 
 import { Button } from "@/shared/components/ui/button";
 import {
@@ -210,8 +211,9 @@ export function BugReportForm() {
           </div>
         </section>
 
-           {/* selector de plantillas que puse en el inicio */}
+         
           <TemplateSelector setValue={form.setValue} />
+          <ToneSelector register={form.register} />
 
         <section className="space-y-4 rounded-lg border border-border/60 bg-background/60 p-4">
           <div className="space-y-1">

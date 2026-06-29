@@ -1,4 +1,4 @@
-import React from "react";
+
 import type { UseFormSetValue } from "react-hook-form";
 import type { BugReportFormValues } from "../schema";
 import type { BugTemplate } from "../types";

@@ -1,9 +1,10 @@
 import React from "react";
 import type { UseFormRegister } from "react-hook-form";
-import type { BugReport } from "../types";
+import type { BugReportFormValues} from "../schema";
+
 
 interface ToneSelectorProps {
-  register: UseFormRegister<BugReport>;
+  register: UseFormRegister<BugReportFormValues>; 
 }
 
 export const ToneSelector: React.FC<ToneSelectorProps> = ({ register }) => {
