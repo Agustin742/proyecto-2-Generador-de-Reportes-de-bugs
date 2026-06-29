@@ -1,10 +1,3 @@
-import { useBugReportStore } from "@/features/bug-report/store";
-import { useForm, useWatch } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  bugReportSchema,
-  type BugReportFormValues,
-} from "@/features/bug-report/schema";
 import { BugReportQualityChecklist } from "@/features/bug-report/components/BugReportQualityChecklist";
 import { BugReportQualitySuggestions } from "@/features/bug-report/components/BugReportQualitySuggestions";
 import { BugReportPreview } from "@/features/bug-report/components/BugReportPreview";
@@ -13,7 +6,7 @@ import { RequiredFieldsNote } from "@/features/bug-report/components/RequiredFie
 import { RequiredMark } from "@/features/bug-report/components/RequiredMark";
 import { SeverityPriorityHelp } from "@/features/bug-report/components/SeverityPriorityHelp";
 import { TemplateSelector } from "@/features/bug-report/components/TemplateSelector";
-import { getDetectedEnvironment } from "@/features/bug-report/utils/detectEnvironment";
+import { useBugReportForm } from "@/features/bug-report/hooks/useBugReportForm";
 
 import { Button } from "@/shared/components/ui/button";
 import {
@@ -36,52 +29,13 @@ import {
 import { Textarea } from "@/shared/components/ui/textarea";
 
 export function BugReportForm() {
-  const addReport = useBugReportStore((state) => state.addReport);
-  const form = useForm<BugReportFormValues>({
-    mode: "onChange",
-    resolver: zodResolver(bugReportSchema),
-    defaultValues: {
-      title: "",
-      description: "",
-      steps: "",
-      expectedResult: "",
-      actualResult: "",
-      severity: undefined,
-      priority: undefined,
-      environment: "",
-      tone: undefined,
-    },
-  });
-  const watchedValues = useWatch({
-    control: form.control,
-  });
-
-  function onSubmit(data: BugReportFormValues) {
-    addReport(data);
-    form.reset();
-    alert("¡Reporte de bug guardado exitosamente en el estado global!");
-  }
-
-  function handleDetectEnvironment() {
-    const detectedEnvironment = getDetectedEnvironment();
-
-    form.setValue("environment", detectedEnvironment, {
-      shouldDirty: true,
-      shouldValidate: true,
-    });
-  }
-
-  function handleClearForm() {
-    const shouldClear = window.confirm(
-      "¿Seguro que querés borrar los datos cargados?",
-    );
-
-    if (!shouldClear) {
-      return;
-    }
-
-    form.reset();
-  }
+  const {
+    form,
+    watchedValues,
+    onSubmit,
+    handleDetectEnvironment,
+    handleClearForm,
+  } = useBugReportForm();
 
   return (
     <Form {...form}>
