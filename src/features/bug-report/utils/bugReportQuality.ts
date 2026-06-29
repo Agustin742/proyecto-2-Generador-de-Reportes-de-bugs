@@ -33,8 +33,23 @@ const technicalEnvironmentHints = [
   "localhost",
 ];
 
-function hasMinimumLength(value: string | undefined, minLength: number) {
-  return normalizeOptionalString(value).trim().length >= minLength;
+type FieldLimits = {
+  min: number;
+  max?: number;
+};
+
+function hasLengthInRange(value: string | undefined, limits: FieldLimits) {
+  const count = normalizeOptionalString(value).trim().length;
+
+  if (count < limits.min) {
+    return false;
+  }
+
+  if (typeof limits.max === "number" && count > limits.max) {
+    return false;
+  }
+
+  return true;
 }
 
 function hasSelectedValue<T>(value: T | undefined) {
@@ -81,38 +96,38 @@ export function getBugReportQualityChecklistItems(
   return [
     {
       label: "Título claro",
-      completed: hasMinimumLength(values.title, BUG_REPORT_FIELD_LIMITS.title.min),
+      completed: hasLengthInRange(values.title, BUG_REPORT_FIELD_LIMITS.title),
     },
     {
       label: "Descripción agregada",
-      completed: hasMinimumLength(
+      completed: hasLengthInRange(
         values.description,
-        BUG_REPORT_FIELD_LIMITS.description.min,
+        BUG_REPORT_FIELD_LIMITS.description,
       ),
     },
     {
       label: "Pasos para reproducir",
-      completed: hasMinimumLength(values.steps, BUG_REPORT_FIELD_LIMITS.steps.min),
+      completed: hasLengthInRange(values.steps, BUG_REPORT_FIELD_LIMITS.steps),
     },
     {
       label: "Resultado esperado",
-      completed: hasMinimumLength(
+      completed: hasLengthInRange(
         values.expectedResult,
-        BUG_REPORT_FIELD_LIMITS.expectedResult.min,
+        BUG_REPORT_FIELD_LIMITS.expectedResult,
       ),
     },
     {
       label: "Resultado actual",
-      completed: hasMinimumLength(
+      completed: hasLengthInRange(
         values.actualResult,
-        BUG_REPORT_FIELD_LIMITS.actualResult.min,
+        BUG_REPORT_FIELD_LIMITS.actualResult,
       ),
     },
     {
       label: "Entorno indicado",
-      completed: hasMinimumLength(
+      completed: hasLengthInRange(
         values.environment,
-        BUG_REPORT_FIELD_LIMITS.environment.min,
+        BUG_REPORT_FIELD_LIMITS.environment,
       ),
     },
     {
@@ -140,24 +155,15 @@ export function hasMinimumInformationForQualitySuggestions(
   values: BugReportQualityValues,
 ) {
   return (
-    hasMinimumLength(values.title, BUG_REPORT_FIELD_LIMITS.title.min) &&
-    hasMinimumLength(
-      values.description,
-      BUG_REPORT_FIELD_LIMITS.description.min,
-    ) &&
-    hasMinimumLength(values.steps, BUG_REPORT_FIELD_LIMITS.steps.min) &&
-    hasMinimumLength(
+    hasLengthInRange(values.title, BUG_REPORT_FIELD_LIMITS.title) &&
+    hasLengthInRange(values.description, BUG_REPORT_FIELD_LIMITS.description) &&
+    hasLengthInRange(values.steps, BUG_REPORT_FIELD_LIMITS.steps) &&
+    hasLengthInRange(
       values.expectedResult,
-      BUG_REPORT_FIELD_LIMITS.expectedResult.min,
+      BUG_REPORT_FIELD_LIMITS.expectedResult,
     ) &&
-    hasMinimumLength(
-      values.actualResult,
-      BUG_REPORT_FIELD_LIMITS.actualResult.min,
-    ) &&
-    hasMinimumLength(
-      values.environment,
-      BUG_REPORT_FIELD_LIMITS.environment.min,
-    ) &&
+    hasLengthInRange(values.actualResult, BUG_REPORT_FIELD_LIMITS.actualResult) &&
+    hasLengthInRange(values.environment, BUG_REPORT_FIELD_LIMITS.environment) &&
     hasSelectedValue(values.severity) &&
     hasSelectedValue(values.priority) &&
     hasSelectedValue(values.tone)

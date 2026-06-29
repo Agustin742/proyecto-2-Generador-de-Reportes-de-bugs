@@ -1,5 +1,6 @@
 import { CharacterCount } from "@/features/bug-report/components/CharacterCount";
 import { RequiredMark } from "@/features/bug-report/components/RequiredMark";
+import { BUG_REPORT_FIELD_LIMITS } from "@/features/bug-report/constants/bugReportValidation";
 import type { BugReportFormValues } from "@/features/bug-report/schema";
 
 import {
@@ -55,7 +56,10 @@ export function BugReportReproductionSection({
                   Listá los pasos en orden para que otra persona pueda reproducir el
                   bug.
                 </FormDescription>
-                <CharacterCount value={values.steps} />
+                <CharacterCount
+                  value={values.steps}
+                  max={BUG_REPORT_FIELD_LIMITS.steps.max}
+                />
               </div>
               <FormMessage />
             </FormItem>
@@ -82,7 +86,10 @@ export function BugReportReproductionSection({
                 <FormDescription>
                   Describí el comportamiento correcto esperado.
                 </FormDescription>
-                <CharacterCount value={values.expectedResult} />
+                <CharacterCount
+                  value={values.expectedResult}
+                  max={BUG_REPORT_FIELD_LIMITS.expectedResult.max}
+                />
               </div>
               <FormMessage />
             </FormItem>
@@ -109,7 +116,10 @@ export function BugReportReproductionSection({
                 <FormDescription>
                   Indicá qué ocurrió realmente y qué vio la persona usuaria.
                 </FormDescription>
-                <CharacterCount value={values.actualResult} />
+                <CharacterCount
+                  value={values.actualResult}
+                  max={BUG_REPORT_FIELD_LIMITS.actualResult.max}
+                />
               </div>
               <FormMessage />
             </FormItem>

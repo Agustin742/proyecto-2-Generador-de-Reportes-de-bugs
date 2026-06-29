@@ -1,5 +1,6 @@
 import { CharacterCount } from "@/features/bug-report/components/CharacterCount";
 import { RequiredMark } from "@/features/bug-report/components/RequiredMark";
+import { BUG_REPORT_FIELD_LIMITS } from "@/features/bug-report/constants/bugReportValidation";
 import type { BugReportFormValues } from "@/features/bug-report/schema";
 
 import { Button } from "@/shared/components/ui/button";
@@ -64,7 +65,10 @@ export function BugReportEnvironmentSection({
                 <FormDescription>
                   Agregá navegador, sistema operativo, dispositivo o URL si aplica.
                 </FormDescription>
-                <CharacterCount value={values.environment} />
+                <CharacterCount
+                  value={values.environment}
+                  max={BUG_REPORT_FIELD_LIMITS.environment.max}
+                />
               </div>
               <FormMessage />
             </FormItem>
