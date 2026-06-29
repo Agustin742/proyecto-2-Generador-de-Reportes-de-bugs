@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 
 import { generateBugReport } from "@/features/bug-report/utils/generateBugReport";
@@ -17,6 +17,8 @@ export function BugReportPreview({
   className,
 }: BugReportPreviewProps) {
   const [mode, setMode] = useState<"raw" | "rendered">("raw");
+  const [copyFeedback, setCopyFeedback] = useState<string | null>(null);
+  const feedbackTimeoutRef = useRef<number | null>(null);
 
   const markdown = generateBugReport(values, headerVariant);
   const hasAnyValue = Boolean(
@@ -31,11 +33,37 @@ export function BugReportPreview({
       values.tone,
   );
 
+  useEffect(() => {
+    return () => {
+      if (feedbackTimeoutRef.current !== null) {
+        window.clearTimeout(feedbackTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  async function handleCopy() {
+    try {
+      await navigator.clipboard.writeText(markdown);
+      setCopyFeedback("Copiado al portapapeles");
+    } catch {
+      setCopyFeedback("No se pudo copiar. Intenta de nuevo.");
+    }
+
+    if (feedbackTimeoutRef.current !== null) {
+      window.clearTimeout(feedbackTimeoutRef.current);
+    }
+
+    feedbackTimeoutRef.current = window.setTimeout(() => {
+      setCopyFeedback(null);
+      feedbackTimeoutRef.current = null;
+    }, 4000);
+  }
+
   return (
     <article className={className} data-slot="bug-report-preview">
       <section className="overflow-hidden rounded-3xl border border-slate-700/80 bg-slate-950/95 shadow-2xl shadow-slate-950/30 ring-1 ring-slate-900/10">
         <header className="border-b border-slate-700/80 bg-slate-900/95 px-5 py-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-wrap items-center justify-between gap-2">
             <span className="text-xs uppercase tracking-[0.3em] text-slate-400">
               bug-report.md
             </span>
@@ -62,11 +90,25 @@ export function BugReportPreview({
               >
                 Vista
               </button>
+
+              <button
+                type="button"
+                onClick={handleCopy}
+                className="rounded-md border border-slate-600 bg-slate-800 px-2 py-1 text-xs text-slate-200 hover:bg-slate-700"
+              >
+                Copiar
+              </button>
             </div>
           </div>
         </header>
 
-        <main className="p-5 text-sm text-slate-100">
+        <div className="p-5 text-sm text-slate-100">
+          {copyFeedback ? (
+            <div className="mb-4 rounded-xl border border-slate-700/80 bg-slate-900/90 px-4 py-3 text-sm text-slate-200">
+              {copyFeedback}
+            </div>
+          ) : null}
+
           {hasAnyValue ? (
             mode === "raw" ? (
               <pre className="overflow-auto whitespace-pre-wrap break-words font-mono text-sm leading-6">
@@ -82,7 +124,7 @@ export function BugReportPreview({
               Completa el formulario para ver una vista previa en Markdown.
             </section>
           )}
-        </main>
+        </div>
       </section>
     </article>
   );
