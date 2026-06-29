@@ -8,12 +8,15 @@ import { BugReportReviewSection } from "@/features/bug-report/components/section
 import { TemplateSelector } from "@/features/bug-report/components/TemplateSelector";
 import { useBugReportForm } from "@/features/bug-report/hooks/useBugReportForm";
 
+import { Button } from "@/shared/components/ui/button";
 import { Form } from "@/shared/components/ui/form";
 
 export function BugReportForm() {
   const {
     form,
     watchedValues,
+    saveFeedback,
+    dismissSaveFeedback,
     onSubmit,
     handleDetectEnvironment,
     handleClearForm,
@@ -65,6 +68,27 @@ export function BugReportForm() {
           </div>
         </aside>
       </div>
+
+      {saveFeedback ? (
+        <div className="fixed right-4 bottom-4 z-50 w-[min(24rem,calc(100vw-2rem))]">
+          <div
+            className="flex items-start justify-between gap-3 rounded-lg border border-border/60 bg-background p-3 text-sm shadow-lg"
+            role="status"
+            aria-live="polite"
+          >
+            <span>{saveFeedback}</span>
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={dismissSaveFeedback}
+              className="h-auto px-2 py-1"
+            >
+              Cerrar
+            </Button>
+          </div>
+        </div>
+      ) : null}
     </Form>
   );
 }
