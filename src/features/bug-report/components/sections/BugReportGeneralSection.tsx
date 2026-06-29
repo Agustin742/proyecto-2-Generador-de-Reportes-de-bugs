@@ -1,5 +1,6 @@
 import { CharacterCount } from "@/features/bug-report/components/CharacterCount";
 import { RequiredMark } from "@/features/bug-report/components/RequiredMark";
+import { BUG_REPORT_FIELD_LIMITS } from "@/features/bug-report/constants/bugReportValidation";
 import type { BugReportFormValues } from "@/features/bug-report/schema";
 
 import {
@@ -45,9 +46,15 @@ export function BugReportGeneralSection({
               <FormControl>
                 <Input placeholder="Ej: Error al guardar cambios" {...field} />
               </FormControl>
-              <FormDescription>
-                Usá un resumen breve del problema y dónde ocurre.
-              </FormDescription>
+              <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+                <FormDescription>
+                  Usá un resumen breve del problema y dónde ocurre.
+                </FormDescription>
+                <CharacterCount
+                  value={values.title}
+                  max={BUG_REPORT_FIELD_LIMITS.title.max}
+                />
+              </div>
               <FormMessage />
             </FormItem>
           )}
@@ -74,7 +81,10 @@ export function BugReportGeneralSection({
                   Contá qué estaba haciendo la persona usuaria cuando apareció el
                   problema.
                 </FormDescription>
-                <CharacterCount value={values.description} />
+                <CharacterCount
+                  value={values.description}
+                  max={BUG_REPORT_FIELD_LIMITS.description.max}
+                />
               </div>
               <FormMessage />
             </FormItem>
