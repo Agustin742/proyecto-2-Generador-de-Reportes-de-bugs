@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState } from "react";
+import { useId, useRef, useState } from "react";
 import { Info, X } from "lucide-react";
 
 import { AboutContent } from "@/features/about/components/AboutContent";
@@ -47,19 +47,15 @@ export function AboutDialog({
     onOpenChange?.(value);
   };
 
-  // Sincroniza el estado controlado con la API imperativa del <dialog> para
-  // conservar backdrop modal y accesibilidad nativos (React docs: useEffect +
-  // showModal/close).
-  useEffect(() => {
-    const dialog = dialogRef.current;
-    if (!dialog) return;
-
-    if (open && !dialog.open) {
-      dialog.showModal();
-    } else if (!open && dialog.open) {
-      dialog.close();
+  function syncDialog(node: HTMLDialogElement | null) {
+    dialogRef.current = node;
+    if (!node) return;
+    if (open && !node.open) {
+      node.showModal();
+    } else if (!open && node.open) {
+      node.close();
     }
-  }, [open]);
+  }
 
   const close = () => {
     setOpen(false);
@@ -86,17 +82,11 @@ export function AboutDialog({
       ) : null}
 
       <dialog
-        ref={dialogRef}
+        ref={syncDialog}
         aria-labelledby={titleId}
         onCancel={(event) => {
-          // Esc: el <dialog> intenta cerrarse; lo enrutamos por `close` para
-          // sincronizar el estado y devolver el foco.
           event.preventDefault();
           close();
-        }}
-        onClick={(event) => {
-          // Click en el overlay (área del propio <dialog>, fuera de la tarjeta).
-          if (event.target === dialogRef.current) close();
         }}
         // `font-sans normal-case tracking-normal text-base` resetean lo que el
         // <dialog> hereda del contenedor del navbar (font-mono + uppercase +
