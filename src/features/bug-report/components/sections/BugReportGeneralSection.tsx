@@ -1,5 +1,5 @@
 import { CharacterCount } from "@/features/bug-report/components/CharacterCount";
-import { RequiredMark } from "@/features/bug-report/components/RequiredMark";
+import { FieldLabel } from "@/features/bug-report/components/FieldLabel";
 import { BUG_REPORT_FIELD_LIMITS } from "@/features/bug-report/constants/bugReportValidation";
 import type { BugReportFormValues } from "@/features/bug-report/schema";
 
@@ -8,7 +8,6 @@ import {
   FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/shared/components/ui/form";
 import { Input } from "@/shared/components/ui/input";
@@ -39,10 +38,9 @@ export function BugReportGeneralSection({
           name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>
+              <FieldLabel index="01" required>
                 Título del bug
-                <RequiredMark />
-              </FormLabel>
+              </FieldLabel>
               <FormControl>
                 <Input
                   aria-required="true"
@@ -69,10 +67,9 @@ export function BugReportGeneralSection({
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>
+              <FieldLabel index="02" required>
                 Descripción detallada
-                <RequiredMark />
-              </FormLabel>
+              </FieldLabel>
               <FormControl>
                 <Textarea
                   aria-required="true"

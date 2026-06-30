@@ -1,5 +1,5 @@
 import { CharacterCount } from "@/features/bug-report/components/CharacterCount";
-import { RequiredMark } from "@/features/bug-report/components/RequiredMark";
+import { FieldLabel } from "@/features/bug-report/components/FieldLabel";
 import { BUG_REPORT_FIELD_LIMITS } from "@/features/bug-report/constants/bugReportValidation";
 import type { BugReportFormValues } from "@/features/bug-report/schema";
 
@@ -8,7 +8,6 @@ import {
   FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/shared/components/ui/form";
 import { Textarea } from "@/shared/components/ui/textarea";
@@ -38,10 +37,9 @@ export function BugReportReproductionSection({
           name="steps"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>
+              <FieldLabel index="03" required>
                 Pasos para reproducir
-                <RequiredMark />
-              </FormLabel>
+              </FieldLabel>
               <FormControl>
                 <Textarea
                   aria-required="true"
@@ -72,10 +70,9 @@ export function BugReportReproductionSection({
           name="expectedResult"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>
+              <FieldLabel index="04" required>
                 Resultado esperado
-                <RequiredMark />
-              </FormLabel>
+              </FieldLabel>
               <FormControl>
                 <Textarea
                   aria-required="true"
@@ -103,10 +100,9 @@ export function BugReportReproductionSection({
           name="actualResult"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>
+              <FieldLabel index="05" required>
                 Resultado actual
-                <RequiredMark />
-              </FormLabel>
+              </FieldLabel>
               <FormControl>
                 <Textarea
                   aria-required="true"

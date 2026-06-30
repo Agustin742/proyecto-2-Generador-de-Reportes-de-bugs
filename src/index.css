@@ -50,6 +50,8 @@
     --radius-sm: calc(var(--radius) * 0.6);
     --radius-md: calc(var(--radius) * 0.8);
     --radius-lg: var(--radius);
+    /* Texto "faint" del template (placeholder/contador), habilita `text-faint` */
+    --color-faint: var(--faint);
     --radius-xl: calc(var(--radius) * 1.4);
     --radius-2xl: calc(var(--radius) * 1.8);
     --radius-3xl: calc(var(--radius) * 2.2);
@@ -89,6 +91,7 @@
     --secondary-foreground: #f6f6f8;
     --muted: rgba(255, 255, 255, 0.04);
     --muted-foreground: #9a9aa2;    /* muted */
+    --faint: #52525c;               /* faint (placeholder/contador) */
 
     /* Estado */
     --destructive: #ff6b86;         /* danger */
@@ -137,6 +140,7 @@
     --secondary-foreground: #f6f6f8;
     --muted: rgba(255, 255, 255, 0.04);
     --muted-foreground: #9a9aa2;
+    --faint: #52525c;
 
     /* Estado */
     --destructive: #ff6b86;

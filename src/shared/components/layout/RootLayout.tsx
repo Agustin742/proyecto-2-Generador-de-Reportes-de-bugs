@@ -1,23 +1,35 @@
 import { NavLink, Outlet } from "react-router-dom"; // O "react-router" según tu versión
 import { PolillaBackground } from "./PolillaBackground";
+import { PolillaLogo } from "@/shared/components/PolillaLogo";
 
 export function RootLayout() {
   return (
-    <div className="min-h-screen bg-zinc-50 text-zinc-900 flex flex-col">
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       {/* Capa decorativa Polilla, detrás del contenido (RFC-0001 §3.5) */}
       <PolillaBackground />
-      {/* Barra de navegación fija para toda la app */}
-      <header className="bg-white border-b border-zinc-200 shadow-sm">
-        <nav className="max-w-7xl mx-auto px-4 h-16 flex items-center gap-6 font-medium text-sm">
-          <NavLink
-            to="/"
-            className={({ isActive }) =>
-              `transition-colors hover:text-zinc-900 ${isActive ? "text-zinc-900 font-semibold" : "text-zinc-500"}`
-            }
-          >
-            Inicio
-          </NavLink>
-          {/* Aca se deben poner las otras paginas */}
+      {/* Topbar mono: logo polilla + eyebrow + navegación (RFC-0002 §3) */}
+      <header className="border-b border-border bg-card/60 backdrop-blur">
+        <nav className="mx-auto flex h-16 max-w-7xl items-center gap-6 px-4">
+          <div className="flex items-center gap-3">
+            <PolillaLogo className="h-8 w-auto text-primary" />
+            <span className="font-mono text-xs uppercase leading-tight tracking-[0.16em] text-muted-foreground">
+              Polilla<span className="text-primary">.</span>
+              <br />
+              Bug Report Generator
+            </span>
+          </div>
+
+          <div className="ml-auto flex items-center gap-6 font-mono text-xs uppercase tracking-[0.16em]">
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                `transition-colors hover:text-primary ${isActive ? "text-foreground" : "text-muted-foreground"}`
+              }
+            >
+              Inicio
+            </NavLink>
+            {/* Aca se deben poner las otras paginas */}
+          </div>
         </nav>
       </header>
 

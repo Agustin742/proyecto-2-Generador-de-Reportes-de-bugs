@@ -1,13 +1,12 @@
 import type { Control } from "react-hook-form";
 
-import { RequiredMark } from "@/features/bug-report/components/RequiredMark";
+import { FieldLabel } from "@/features/bug-report/components/FieldLabel";
 import type { BugReportFormValues } from "@/features/bug-report/schema";
 import {
   FormControl,
   FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/shared/components/ui/form";
 import {
@@ -29,10 +28,9 @@ export function ToneSelector({ control }: ToneSelectorProps) {
       name="tone"
       render={({ field }) => (
         <FormItem>
-          <FormLabel>
+          <FieldLabel index="08" required>
             Tono
-            <RequiredMark />
-          </FormLabel>
+          </FieldLabel>
           <Select onValueChange={field.onChange} value={field.value ?? ""}>
             <FormControl>
               <SelectTrigger aria-required="true">

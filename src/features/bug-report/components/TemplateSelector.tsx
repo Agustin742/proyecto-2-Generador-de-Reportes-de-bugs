@@ -33,7 +33,7 @@ export function TemplateSelector({ setValue }: TemplateSelectorProps) {
           variant="outline"
           size="sm"
           onClick={() => handleSelect("visual")}
-          className="cursor-pointer border-blue-200 hover:bg-blue-50 hover:text-blue-600 dark:border-blue-900/50 dark:hover:bg-blue-950/30"
+          className="cursor-pointer hover:border-primary hover:bg-primary/10 hover:text-primary"
         >
            Visual
         </Button>
@@ -42,7 +42,7 @@ export function TemplateSelector({ setValue }: TemplateSelectorProps) {
           variant="outline"
           size="sm"
           onClick={() => handleSelect("functional")}
-          className="cursor-pointer border-green-200 hover:bg-green-50 hover:text-green-600 dark:border-green-900/50 dark:hover:bg-green-950/30"
+          className="cursor-pointer hover:border-primary hover:bg-primary/10 hover:text-primary"
         >
            Funcional
         </Button>
@@ -51,7 +51,7 @@ export function TemplateSelector({ setValue }: TemplateSelectorProps) {
           variant="outline"
           size="sm"
           onClick={() => handleSelect("performance")}
-          className="cursor-pointer border-amber-200 hover:bg-amber-50 hover:text-amber-600 dark:border-amber-900/50 dark:hover:bg-amber-950/30"
+          className="cursor-pointer hover:border-primary hover:bg-primary/10 hover:text-primary"
         >
            Rendimiento
         </Button>

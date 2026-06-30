@@ -61,10 +61,11 @@ export function BugReportPreview({
 
   return (
     <article className={className} data-slot="bug-report-preview">
-      <section className="overflow-hidden rounded-3xl border border-slate-700/80 bg-slate-950/95 shadow-2xl shadow-slate-950/30 ring-1 ring-slate-900/10">
-        <header className="border-b border-slate-700/80 bg-slate-900/95 px-5 py-4">
+      <section className="overflow-hidden rounded-[var(--radius-card)] border border-border bg-card/[0.72] shadow-2xl shadow-black/30 backdrop-blur-xl">
+        <header className="border-b border-border bg-white/[0.02] px-5 py-4">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <span className="text-xs uppercase tracking-[0.3em] text-slate-400">
+            <span className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.3em] text-muted-foreground">
+              <span aria-hidden className="size-2 rounded-[2px] bg-primary" />
               bug-report.md
             </span>
 
@@ -72,9 +73,12 @@ export function BugReportPreview({
               <button
                 type="button"
                 onClick={() => setMode("raw")}
+                aria-pressed={mode === "raw"}
                 className={
-                  "rounded-md px-2 py-1 text-xs " +
-                  (mode === "raw" ? "bg-slate-700 text-white" : "text-slate-400")
+                  "rounded-md px-2 py-1 font-mono text-xs transition-colors " +
+                  (mode === "raw"
+                    ? "bg-primary/10 text-primary"
+                    : "text-muted-foreground hover:text-foreground")
                 }
               >
                 Markdown
@@ -83,9 +87,12 @@ export function BugReportPreview({
               <button
                 type="button"
                 onClick={() => setMode("rendered")}
+                aria-pressed={mode === "rendered"}
                 className={
-                  "rounded-md px-2 py-1 text-xs " +
-                  (mode === "rendered" ? "bg-slate-700 text-white" : "text-slate-400")
+                  "rounded-md px-2 py-1 font-mono text-xs transition-colors " +
+                  (mode === "rendered"
+                    ? "bg-primary/10 text-primary"
+                    : "text-muted-foreground hover:text-foreground")
                 }
               >
                 Vista
@@ -94,7 +101,7 @@ export function BugReportPreview({
               <button
                 type="button"
                 onClick={handleCopy}
-                className="rounded-md border border-slate-600 bg-slate-800 px-2 py-1 text-xs text-slate-200 hover:bg-slate-700"
+                className="rounded-md bg-primary px-2 py-1 font-mono text-xs text-primary-foreground transition-colors hover:bg-primary/90"
               >
                 Copiar
               </button>
@@ -102,9 +109,13 @@ export function BugReportPreview({
           </div>
         </header>
 
-        <div className="p-5 text-sm text-slate-100">
+        <div className="p-5 text-sm text-foreground">
           {copyFeedback ? (
-            <div className="mb-4 rounded-xl border border-slate-700/80 bg-slate-900/90 px-4 py-3 text-sm text-slate-200">
+            <div
+              role="status"
+              aria-live="polite"
+              className="mb-4 rounded-xl border border-border bg-white/[0.03] px-4 py-3 text-sm text-foreground"
+            >
               {copyFeedback}
             </div>
           ) : null}
@@ -120,11 +131,15 @@ export function BugReportPreview({
               </section>
             )
           ) : (
-            <section className="rounded-2xl border border-slate-700/80 bg-slate-950/80 p-6 text-sm text-slate-400">
+            <section className="rounded-2xl border border-border bg-white/[0.02] p-6 text-sm text-muted-foreground">
               Completa el formulario para ver una vista previa en Markdown.
             </section>
           )}
         </div>
+
+        <footer className="border-t border-border bg-white/[0.02] px-5 py-2 text-right font-mono text-xs text-faint">
+          {markdown.length} caracteres
+        </footer>
       </section>
     </article>
   );

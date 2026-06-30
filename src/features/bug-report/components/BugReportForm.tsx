@@ -27,7 +27,7 @@ export function BugReportForm() {
       <div className="mx-auto lg:flex lg:items-start lg:gap-6">
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="w-full space-y-8 rounded-lg border bg-zinc-50/50 p-6 lg:max-w-2xl"
+          className="w-full space-y-8 rounded-lg border border-border bg-card/60 p-6 lg:max-w-2xl"
         >
           <RequiredFieldsNote />
 
@@ -64,7 +64,7 @@ export function BugReportForm() {
             <BugReportPreview
               values={watchedValues}
               headerVariant={watchedValues.headerVariant ?? 0}
-              className="rounded-xl border border-border/70 bg-white p-4"
+              className="rounded-xl border border-border/70 bg-card/70 p-4"
             />
           </div>
         </aside>

@@ -1,4 +1,4 @@
-import { RequiredMark } from "@/features/bug-report/components/RequiredMark";
+import { FieldLabel } from "@/features/bug-report/components/FieldLabel";
 import { SeverityPriorityHelp } from "@/features/bug-report/components/SeverityPriorityHelp";
 import { ToneSelector } from "@/features/bug-report/components/ToneSelector";
 import type { BugReportFormValues } from "@/features/bug-report/schema";
@@ -9,7 +9,6 @@ import {
   FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/shared/components/ui/form";
 import {
@@ -44,10 +43,9 @@ export function BugReportClassificationSection({
             name="severity"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>
+                <FieldLabel index="06" required>
                   Severidad
-                  <RequiredMark />
-                </FormLabel>
+                </FieldLabel>
                 <Select onValueChange={field.onChange} value={field.value ?? ""}>
                   <FormControl>
                     <SelectTrigger aria-required="true">
@@ -74,10 +72,9 @@ export function BugReportClassificationSection({
             name="priority"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>
+                <FieldLabel index="07" required>
                   Prioridad
-                  <RequiredMark />
-                </FormLabel>
+                </FieldLabel>
                 <Select onValueChange={field.onChange} value={field.value ?? ""}>
                   <FormControl>
                     <SelectTrigger aria-required="true">
@@ -106,7 +103,7 @@ export function BugReportClassificationSection({
           name="headerVariant"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Variante de encabezados</FormLabel>
+              <FieldLabel index="09">Variante de encabezados</FieldLabel>
               <Select
                 onValueChange={(value) =>
                   field.onChange(Number(value) as HeaderVariant)

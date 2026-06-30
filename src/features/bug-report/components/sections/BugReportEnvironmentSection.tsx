@@ -1,5 +1,5 @@
 import { CharacterCount } from "@/features/bug-report/components/CharacterCount";
-import { RequiredMark } from "@/features/bug-report/components/RequiredMark";
+import { FieldLabel } from "@/features/bug-report/components/FieldLabel";
 import { BUG_REPORT_FIELD_LIMITS } from "@/features/bug-report/constants/bugReportValidation";
 import type { BugReportFormValues } from "@/features/bug-report/schema";
 
@@ -9,7 +9,6 @@ import {
   FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/shared/components/ui/form";
 import { Input } from "@/shared/components/ui/input";
@@ -41,10 +40,9 @@ export function BugReportEnvironmentSection({
           name="environment"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>
+              <FieldLabel index="10" required>
                 Entorno
-                <RequiredMark />
-              </FormLabel>
+              </FieldLabel>
               <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
                 <FormControl>
                   <Input
