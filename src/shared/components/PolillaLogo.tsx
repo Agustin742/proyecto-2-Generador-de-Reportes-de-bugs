@@ -10,9 +10,14 @@
  */
 type PolillaLogoProps = {
   className?: string;
+  /** Si las alas aletean (`flutter-l/-r`). Default `true`. */
+  animated?: boolean;
 };
 
-export function PolillaLogo({ className }: PolillaLogoProps) {
+export function PolillaLogo({ className, animated = true }: PolillaLogoProps) {
+  const leftWing = animated ? "animate-flutter-l" : "";
+  const rightWing = animated ? "animate-flutter-r" : "";
+
   return (
     <svg
       viewBox="0 0 200 220"
@@ -37,11 +42,11 @@ export function PolillaLogo({ className }: PolillaLogoProps) {
         />
         <circle cx="60" cy="20" r="7" />
         <circle cx="140" cy="20" r="7" />
-        <g className="origin-[96px_112px] animate-flutter-l [transform-box:view-box]">
+        <g className={`origin-[96px_112px] [transform-box:view-box] ${leftWing}`}>
           <ellipse cx="62" cy="98" rx="42" ry="34" transform="rotate(-22 62 98)" />
           <ellipse cx="76" cy="148" rx="29" ry="25" transform="rotate(-12 76 148)" />
         </g>
-        <g className="origin-[104px_112px] animate-flutter-r [transform-box:view-box]">
+        <g className={`origin-[104px_112px] [transform-box:view-box] ${rightWing}`}>
           <ellipse cx="138" cy="98" rx="42" ry="34" transform="rotate(22 138 98)" />
           <ellipse cx="124" cy="148" rx="29" ry="25" transform="rotate(12 124 148)" />
         </g>

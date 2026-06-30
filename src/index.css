@@ -64,6 +64,14 @@
     --animate-blob-b: blob-b 22s ease-in-out infinite;
     --animate-flutter-l: flutter-l 3.4s ease-in-out infinite;
     --animate-flutter-r: flutter-r 3.4s ease-in-out infinite;
+    /* Deriva del enjambre de polillas (RFC-0002). La duracion/delay reales se
+       sobre-escriben por sprite via style inline para desincronizar el vuelo. */
+    --animate-drift-1: drift-1 30s ease-in-out infinite;
+    --animate-drift-2: drift-2 30s ease-in-out infinite;
+    --animate-drift-3: drift-3 30s ease-in-out infinite;
+    --animate-drift-4: drift-4 30s ease-in-out infinite;
+    --animate-drift-5: drift-5 30s ease-in-out infinite;
+    --animate-drift-6: drift-6 30s ease-in-out infinite;
 }
 
 /*
@@ -219,6 +227,52 @@
 @keyframes flutter-r {
   0%, 100% { transform: rotate(0deg); }
   50% { transform: rotate(11deg); }
+}
+
+/* Vuelo errante de las polillas del enjambre (RFC-0002): cada sprite recorre
+   buena parte de la pantalla (rangos en vw/vh) con un patron distinto, para
+   que el conjunto se disperse y se vea organico. Cada ciclo vuelve al origen
+   (0,0) para encadenarse sin saltos. */
+@keyframes drift-1 {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  25%  { transform: translate(14vw, -10vh) rotate(8deg); }
+  50%  { transform: translate(24vw, 12vh) rotate(-6deg); }
+  75%  { transform: translate(8vw, 22vh) rotate(5deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+@keyframes drift-2 {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  30%  { transform: translate(-18vw, 14vh) rotate(-9deg); }
+  60%  { transform: translate(-6vw, 28vh) rotate(7deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+@keyframes drift-3 {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  20%  { transform: translate(12vw, 9vh) rotate(7deg); }
+  55%  { transform: translate(26vw, -14vh) rotate(-6deg); }
+  80%  { transform: translate(10vw, -5vh) rotate(4deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+@keyframes drift-4 {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  25%  { transform: translate(-12vw, 16vh) rotate(-7deg); }
+  50%  { transform: translate(6vw, 30vh) rotate(6deg); }
+  75%  { transform: translate(20vw, 12vh) rotate(-5deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+@keyframes drift-5 {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  30%  { transform: translate(-20vw, -12vh) rotate(8deg); }
+  65%  { transform: translate(-10vw, -26vh) rotate(-6deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+@keyframes drift-6 {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  20%  { transform: translate(12vw, 12vh) rotate(6deg); }
+  40%  { transform: translate(22vw, -8vh) rotate(-5deg); }
+  60%  { transform: translate(-6vw, -18vh) rotate(7deg); }
+  80%  { transform: translate(-16vw, 6vh) rotate(-4deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
 }
 
 @media (prefers-reduced-motion: reduce) {
