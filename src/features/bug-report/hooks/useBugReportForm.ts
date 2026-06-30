@@ -5,7 +5,7 @@ import {
 } from "@/features/bug-report/schema";
 import { useBugReportStore, type SavedReport } from "@/features/bug-report/store";
 import { getDetectedEnvironment } from "@/features/bug-report/utils/detectEnvironment";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useForm, useWatch, type DefaultValues } from "react-hook-form";
 
 const EMPTY_DEFAULTS: DefaultValues<BugReportFormValues> = {
@@ -50,13 +50,7 @@ export function useBugReportForm({
     control: form.control,
   });
 
-  useEffect(() => {
-    return () => {
-      if (feedbackTimeoutRef.current !== null) {
-        window.clearTimeout(feedbackTimeoutRef.current);
-      }
-    };
-  }, []);
+
 
   function showSaveFeedback(message: string) {
     setSaveFeedback(message);

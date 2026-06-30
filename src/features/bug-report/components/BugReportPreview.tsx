@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 import { BugReportMarkdownView } from "@/features/bug-report/components/BugReportMarkdownView";
 import { generateBugReport } from "@/features/bug-report/utils/generateBugReport";
@@ -32,14 +32,6 @@ export function BugReportPreview({
       values.priority ||
       values.tone,
   );
-
-  useEffect(() => {
-    return () => {
-      if (feedbackTimeoutRef.current !== null) {
-        window.clearTimeout(feedbackTimeoutRef.current);
-      }
-    };
-  }, []);
 
   async function handleCopy() {
     try {
@@ -111,13 +103,9 @@ export function BugReportPreview({
 
         <div className="min-h-0 flex-1 overflow-auto p-5 text-sm text-foreground">
           {copyFeedback ? (
-            <div
-              role="status"
-              aria-live="polite"
-              className="mb-4 rounded-xl border border-border bg-white/[0.03] px-4 py-3 text-sm text-foreground"
-            >
+            <output className="mb-4 block rounded-xl border border-border bg-white/[0.03] px-4 py-3 text-sm text-foreground">
               {copyFeedback}
-            </div>
+            </output>
           ) : null}
 
           {hasAnyValue ? (
