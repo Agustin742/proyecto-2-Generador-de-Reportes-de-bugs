@@ -1,8 +1,11 @@
 import { NavLink, Outlet } from "react-router-dom"; // O "react-router" según tu versión
+import { PolillaBackground } from "./PolillaBackground";
 
 export function RootLayout() {
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-900 flex flex-col">
+      {/* Capa decorativa Polilla, detrás del contenido (RFC-0001 §3.5) */}
+      <PolillaBackground />
       {/* Barra de navegación fija para toda la app */}
       <header className="bg-white border-b border-zinc-200 shadow-sm">
         <nav className="max-w-7xl mx-auto px-4 h-16 flex items-center gap-6 font-medium text-sm">
