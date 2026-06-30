@@ -1,7 +1,7 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { Info, X } from "lucide-react";
 
-import { AboutContent } from "@/shared/components/about/AboutContent";
+import { AboutContent } from "@/features/about/components/AboutContent";
 import { Button } from "@/shared/components/ui/button";
 
 /**

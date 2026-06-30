@@ -1,5 +1,5 @@
 import { PolillaLogo } from "@/shared/components/PolillaLogo";
-import { usePolillasStore } from "@/shared/stores/usePolillasStore";
+import { usePolillasStore } from "@/features/polillas/store";
 
 /**
  * Capa decorativa de fondo del sistema visual "Polilla" (RFC-0001 §3.5).

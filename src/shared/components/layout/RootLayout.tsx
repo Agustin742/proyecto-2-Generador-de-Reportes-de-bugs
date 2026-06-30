@@ -1,10 +1,10 @@
 import { NavLink, Outlet } from "react-router-dom"; // O "react-router" según tu versión
 import { Bug, BugOff } from "lucide-react";
-import { PolillaBackground } from "./PolillaBackground";
+import { PolillaBackground } from "@/features/polillas/components/PolillaBackground";
 import { PolillaLogo } from "@/shared/components/PolillaLogo";
-import { AboutDialog } from "@/shared/components/AboutDialog";
+import { AboutDialog } from "@/features/about/components/AboutDialog";
 import { Button } from "@/shared/components/ui/button";
-import { usePolillasStore } from "@/shared/stores/usePolillasStore";
+import { usePolillasStore } from "@/features/polillas/store";
 
 export function RootLayout() {
   const polillasEnabled = usePolillasStore((state) => state.enabled);

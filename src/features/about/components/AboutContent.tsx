@@ -1,7 +1,7 @@
 import { ArrowUpRight, ClipboardCheck, ListChecks, ShieldCheck } from "lucide-react";
 
 import { PolillaLogo } from "@/shared/components/PolillaLogo";
-import { collaborators } from "@/shared/data/collaborators";
+import { collaborators } from "@/features/about/data/collaborators";
 
 /** Un valor de la herramienta: icono + titulo + subtitulo (RFC-0004 §4.3). */
 const values = [
