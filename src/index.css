@@ -72,6 +72,9 @@
     --animate-drift-4: drift-4 30s ease-in-out infinite;
     --animate-drift-5: drift-5 30s ease-in-out infinite;
     --animate-drift-6: drift-6 30s ease-in-out infinite;
+    /* Modal "Acerca de" (RFC-0004): entrada de la tarjeta y vuelo de la polilla */
+    --animate-about-card-in: about-card-in 0.35s ease-out;
+    --animate-moth-land: moth-land 1.1s ease-out 0.15s both;
 }
 
 /*
@@ -273,6 +276,31 @@
   60%  { transform: translate(-6vw, -18vh) rotate(7deg); }
   80%  { transform: translate(-16vw, 6vh) rotate(-4deg); }
   100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+/* Modal "Acerca de" (RFC-0004 §3). Tres capas encadenadas: overlay (backdrop
+   con blur que aparece con fade), tarjeta que sube/escala, y una polilla que
+   entra volando hasta posarse junto al titulo. Con reduced-motion, el bloque
+   global de abajo apaga todo y el modal simplemente aparece ya armado. */
+@keyframes about-overlay-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes about-card-in {
+  from { opacity: 0; transform: translateY(24px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes moth-land {
+  0% { opacity: 0; transform: translate(-110px, -70px) rotate(-18deg) scale(0.6); }
+  60% { opacity: 1; transform: translate(10px, 6px) rotate(8deg) scale(1.05); }
+  100% { opacity: 1; transform: translate(0, 0) rotate(0deg) scale(1); }
+}
+/* El ::backdrop del <dialog> nativo no es alcanzable por clases utilitarias,
+   asi que se estila aca: oscurece + difumina la vista y entra con fade. */
+.about-dialog::backdrop {
+  background: rgba(8, 8, 10, 0.62);
+  backdrop-filter: blur(6px);
+  animation: about-overlay-in 0.2s ease-out;
 }
 
 @media (prefers-reduced-motion: reduce) {

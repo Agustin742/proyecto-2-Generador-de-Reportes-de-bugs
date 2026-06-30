@@ -2,6 +2,7 @@ import { NavLink, Outlet } from "react-router-dom"; // O "react-router" según t
 import { Bug, BugOff } from "lucide-react";
 import { PolillaBackground } from "./PolillaBackground";
 import { PolillaLogo } from "@/shared/components/PolillaLogo";
+import { AboutDialog } from "@/shared/components/AboutDialog";
 import { Button } from "@/shared/components/ui/button";
 import { usePolillasStore } from "@/shared/stores/usePolillasStore";
 
@@ -48,6 +49,9 @@ export function RootLayout() {
               Reportes
             </NavLink>
             {/* Aca se deben poner las otras paginas */}
+
+            {/* Modal "Acerca de" autocontenido (RFC-0004): trigger + dialog */}
+            <AboutDialog />
 
             {/* Apaga/enciende el enjambre de polillas del fondo (RFC-0002) */}
             <Button
