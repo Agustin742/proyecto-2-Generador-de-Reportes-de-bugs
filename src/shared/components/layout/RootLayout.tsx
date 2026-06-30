@@ -13,9 +13,9 @@ export function RootLayout() {
           <div className="flex items-center gap-3">
             <PolillaLogo className="h-8 w-auto text-primary" />
             <span className="font-mono text-xs uppercase leading-tight tracking-[0.16em] text-muted-foreground">
-              Polilla<span className="text-primary">.</span>
+              BugNet<span className="text-primary">.</span>
               <br />
-              Bug Report Generator
+              Generador de Reportes
             </span>
           </div>
 
