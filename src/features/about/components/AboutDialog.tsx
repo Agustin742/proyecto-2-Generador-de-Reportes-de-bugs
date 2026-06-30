@@ -4,9 +4,23 @@ import { Info, X } from "lucide-react";
 import { AboutContent } from "@/features/about/components/AboutContent";
 import { Button } from "@/shared/components/ui/button";
 
+type AboutDialogProps = {
+  /**
+   * Apertura controlada. Si se omite, el componente maneja su propio estado
+   * (modo autocontenido del navbar de escritorio).
+   */
+  open?: boolean;
+  /** Notifica los cambios de apertura cuando se usa controlado. */
+  onOpenChange?: (open: boolean) => void;
+  /** Renderiza el disparador propio del navbar (por defecto `true`). */
+  showTrigger?: boolean;
+};
+
 /**
- * Modal "Acerca de" (RFC-0004). Autocontenido: incluye su propio disparador en
- * el navbar y maneja su estado de apertura, de modo que integrarlo es ~1 línea.
+ * Modal "Acerca de" (RFC-0004). Por defecto es autocontenido: incluye su propio
+ * disparador en el navbar y maneja su estado de apertura, de modo que integrarlo
+ * es ~1 línea. También admite control externo (`open`/`onOpenChange` con
+ * `showTrigger={false}`) para abrirlo desde otro origen, como el menú mobile.
  *
  * Usa el `<dialog>` nativo (mismo patrón que `ConfirmDialog`): trampa de foco y
  * cierre con `Esc` gratis. La entrada de la tarjeta (`animate-about-card-in`) y
@@ -15,11 +29,23 @@ import { Button } from "@/shared/components/ui/button";
  * `prefers-reduced-motion` el bloque global de `index.css` apaga las
  * animaciones y el modal aparece ya armado.
  */
-export function AboutDialog() {
-  const [open, setOpen] = useState(false);
+export function AboutDialog({
+  open: openProp,
+  onOpenChange,
+  showTrigger = true,
+}: AboutDialogProps = {}) {
+  const isControlled = openProp !== undefined;
+  const [openState, setOpenState] = useState(false);
+  const open = isControlled ? openProp : openState;
+
   const dialogRef = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const titleId = useId();
+
+  const setOpen = (value: boolean) => {
+    if (!isControlled) setOpenState(value);
+    onOpenChange?.(value);
+  };
 
   // Sincroniza el estado controlado con la API imperativa del <dialog> para
   // conservar backdrop modal y accesibilidad nativos (React docs: useEffect +
@@ -37,23 +63,27 @@ export function AboutDialog() {
 
   const close = () => {
     setOpen(false);
-    // El foco vuelve al disparador al cerrar (RFC-0004 §6).
+    // El foco vuelve al disparador propio al cerrar (RFC-0004 §6). En modo
+    // controlado (sin disparador propio) es el padre quien restaura el foco vía
+    // `onOpenChange`.
     triggerRef.current?.focus();
   };
 
   return (
     <>
-      <Button
-        ref={triggerRef}
-        type="button"
-        variant="ghost"
-        size="sm"
-        onClick={() => setOpen(true)}
-        className="gap-1.5 font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground hover:text-primary"
-      >
-        <Info aria-hidden />
-        Acerca de
-      </Button>
+      {showTrigger ? (
+        <Button
+          ref={triggerRef}
+          type="button"
+          variant="ghost"
+          size="sm"
+          onClick={() => setOpen(true)}
+          className="gap-1.5 font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground hover:text-primary"
+        >
+          <Info aria-hidden />
+          Acerca de
+        </Button>
+      ) : null}
 
       <dialog
         ref={dialogRef}

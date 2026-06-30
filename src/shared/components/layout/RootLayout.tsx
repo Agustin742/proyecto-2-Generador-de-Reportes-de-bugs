@@ -4,6 +4,8 @@ import { PolillaBackground } from "@/features/polillas/components/PolillaBackgro
 import { PolillaLogo } from "@/shared/components/PolillaLogo";
 import { AboutDialog } from "@/features/about/components/AboutDialog";
 import { Button } from "@/shared/components/ui/button";
+import { MobileNav } from "@/shared/components/layout/MobileNav";
+import { navItems } from "@/shared/components/layout/navItems";
 import { usePolillasStore } from "@/features/polillas/store";
 
 export function RootLayout() {
@@ -17,9 +19,9 @@ export function RootLayout() {
       {/* Topbar mono: logo polilla + eyebrow + navegación (RFC-0002 §3) */}
       <header className="pt-4 sm:pt-6">
         <nav className="mx-auto flex h-16 max-w-7xl items-center gap-6 px-4">
-          <div className="flex items-center gap-3">
+          <div className="flex min-w-0 items-center gap-3">
             <PolillaLogo
-              className="h-8 w-auto text-primary"
+              className="h-8 w-auto shrink-0 text-primary"
               animated={polillasEnabled}
             />
             <span className="font-mono text-xs uppercase leading-tight tracking-[0.16em] text-muted-foreground">
@@ -29,26 +31,22 @@ export function RootLayout() {
             </span>
           </div>
 
-          <div className="ml-auto flex items-center gap-6 font-mono text-xs uppercase tracking-[0.16em]">
-            <NavLink
-              to="/"
-              end
-              className={({ isActive }) =>
-                `transition-colors hover:text-primary ${isActive ? "text-foreground" : "text-muted-foreground"}`
-              }
-            >
-              Inicio
-            </NavLink>
-
-            <NavLink
-              to="/reportes"
-              className={({ isActive }) =>
-                `transition-colors hover:text-primary ${isActive ? "text-foreground" : "text-muted-foreground"}`
-              }
-            >
-              Reportes
-            </NavLink>
-            {/* Aca se deben poner las otras paginas */}
+          {/* Fila de enlaces de escritorio: oculta bajo 705px, donde su ancho
+              desbordaba el viewport y provocaba scroll horizontal (la reemplaza
+              `MobileNav`). */}
+          <div className="ml-auto hidden items-center gap-6 font-mono text-xs uppercase tracking-[0.16em] min-[705px]:flex">
+            {navItems.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                end={item.end}
+                className={({ isActive }) =>
+                  `transition-colors hover:text-primary ${isActive ? "text-foreground" : "text-muted-foreground"}`
+                }
+              >
+                {item.label}
+              </NavLink>
+            ))}
 
             {/* Modal "Acerca de" autocontenido (RFC-0004): trigger + dialog */}
             <AboutDialog />
@@ -70,6 +68,11 @@ export function RootLayout() {
             >
               {polillasEnabled ? <Bug /> : <BugOff />}
             </Button>
+          </div>
+
+          {/* Menú desplegable equivalente para mobile (< 705px). */}
+          <div className="ml-auto min-[705px]:hidden">
+            <MobileNav />
           </div>
         </nav>
       </header>
