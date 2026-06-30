@@ -19,7 +19,7 @@ export function ReportsPage() {
   const [confirmClearAll, setConfirmClearAll] = useState(false);
 
   // Del más nuevo al más viejo.
-  const sortedReports = [...reports].sort(
+  const sortedReports = reports.toSorted(
     (a, b) => b.createdAt - a.createdAt,
   );
 

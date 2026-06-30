@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef } from "react";
+import { useId, useRef } from "react";
 
 import { Button } from "@/shared/components/ui/button";
 
@@ -30,22 +30,19 @@ export function ConfirmDialog({
   const titleId = useId();
   const descriptionId = useId();
 
-  // Sincroniza el atributo `open` controlado con la API imperativa del <dialog>
-  // para mantener el backdrop modal y la accesibilidad nativos.
-  useEffect(() => {
-    const dialog = dialogRef.current;
-    if (!dialog) return;
-
-    if (open && !dialog.open) {
-      dialog.showModal();
-    } else if (!open && dialog.open) {
-      dialog.close();
+  function syncDialog(node: HTMLDialogElement | null) {
+    dialogRef.current = node;
+    if (!node) return;
+    if (open && !node.open) {
+      node.showModal();
+    } else if (!open && node.open) {
+      node.close();
     }
-  }, [open]);
+  }
 
   return (
     <dialog
-      ref={dialogRef}
+      ref={syncDialog}
       role="alertdialog"
       aria-labelledby={titleId}
       aria-describedby={description ? descriptionId : undefined}
