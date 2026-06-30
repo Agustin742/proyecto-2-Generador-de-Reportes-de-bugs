@@ -54,12 +54,12 @@ export function PolillaBackground() {
                  bg-[radial-gradient(120%_80%_at_80%_-10%,rgba(255,77,141,0.16),transparent_60%)]"
     >
       <div
-        className="absolute -top-44 -left-40 size-[560px] rounded-full blur-2xl
+        className="absolute -top-44 -left-40 size-140 rounded-full blur-2xl
                    bg-[radial-gradient(circle,rgba(255,77,141,0.26),transparent_65%)]
                    animate-blob-b"
       />
       <div
-        className="absolute -bottom-52 -right-36 size-[640px] rounded-full blur-2xl
+        className="absolute -bottom-52 -right-36 size-160 rounded-full blur-2xl
                    bg-[radial-gradient(circle,rgba(255,46,154,0.22),transparent_65%)]
                    animate-blob-a"
       />
