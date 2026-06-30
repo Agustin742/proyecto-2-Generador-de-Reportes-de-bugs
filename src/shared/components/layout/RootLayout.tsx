@@ -15,7 +15,7 @@ export function RootLayout() {
       {/* Capa decorativa Polilla, detrás del contenido (RFC-0001 §3.5) */}
       <PolillaBackground />
       {/* Topbar mono: logo polilla + eyebrow + navegación (RFC-0002 §3) */}
-      <header className="border-b border-border bg-card/60 backdrop-blur">
+      <header className="pt-4 sm:pt-6">
         <nav className="mx-auto flex h-16 max-w-7xl items-center gap-6 px-4">
           <div className="flex items-center gap-3">
             <PolillaLogo

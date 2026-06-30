@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import ReactMarkdown from "react-markdown";
 
+import { BugReportMarkdownView } from "@/features/bug-report/components/BugReportMarkdownView";
 import { generateBugReport } from "@/features/bug-report/utils/generateBugReport";
 import type { BugReportFormValues } from "@/features/bug-report/schema";
 import type { HeaderVariant } from "@/features/bug-report/utils/toneTemplates";
@@ -61,8 +61,8 @@ export function BugReportPreview({
 
   return (
     <article className={className} data-slot="bug-report-preview">
-      <section className="overflow-hidden rounded-[var(--radius-card)] border border-border bg-card/[0.72] shadow-2xl shadow-black/30 backdrop-blur-xl">
-        <header className="border-b border-border bg-white/[0.02] px-5 py-4">
+      <section className="flex max-h-full flex-col overflow-hidden rounded-[var(--radius-card)] border border-border bg-card/[0.72] shadow-2xl shadow-black/30 backdrop-blur-xl">
+        <header className="shrink-0 border-b border-border bg-white/[0.02] px-5 py-4">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <span className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.3em] text-muted-foreground">
               <span aria-hidden className="size-2 rounded-[2px] bg-primary" />
@@ -109,7 +109,7 @@ export function BugReportPreview({
           </div>
         </header>
 
-        <div className="p-5 text-sm text-foreground">
+        <div className="min-h-0 flex-1 overflow-auto p-5 text-sm text-foreground">
           {copyFeedback ? (
             <div
               role="status"
@@ -122,13 +122,11 @@ export function BugReportPreview({
 
           {hasAnyValue ? (
             mode === "raw" ? (
-              <pre className="overflow-auto whitespace-pre-wrap break-words font-mono text-sm leading-6">
+              <pre className="whitespace-pre-wrap break-words font-mono text-[13px] leading-[1.75] text-foreground/85">
                 {markdown}
               </pre>
             ) : (
-              <section className="overflow-auto whitespace-pre-wrap break-words font-sans text-sm leading-6">
-                <ReactMarkdown>{markdown}</ReactMarkdown>
-              </section>
+              <BugReportMarkdownView markdown={markdown} />
             )
           ) : (
             <section className="rounded-2xl border border-border bg-white/[0.02] p-6 text-sm text-muted-foreground">
@@ -137,7 +135,7 @@ export function BugReportPreview({
           )}
         </div>
 
-        <footer className="border-t border-border bg-white/[0.02] px-5 py-2 text-right font-mono text-xs text-faint">
+        <footer className="shrink-0 border-t border-border bg-white/[0.02] px-5 py-2 text-right font-mono text-xs text-faint">
           {markdown.length} caracteres
         </footer>
       </section>

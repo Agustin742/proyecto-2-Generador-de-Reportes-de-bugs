@@ -37,12 +37,18 @@ export function BugReportForm({
 
   return (
     <Form {...form}>
-      <div className="mx-auto lg:flex lg:items-start lg:gap-6">
+      <div
+        className={
+          showPreview
+            ? "mx-auto lg:grid lg:grid-cols-2 lg:items-start lg:gap-10"
+            : "mx-auto"
+        }
+      >
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className={
             showPreview
-              ? "w-full space-y-8 rounded-lg border border-border bg-card/60 p-6 lg:max-w-2xl"
+              ? "w-full space-y-8 rounded-lg border border-border bg-card/60 p-6"
               : "w-full space-y-8"
           }
         >
@@ -73,9 +79,8 @@ export function BugReportForm({
         </form>
 
         {showPreview ? (
-          <aside className="mt-6 lg:mt-0 lg:w-1/3 lg:sticky lg:top-6">
-          <div className="space-y-4 rounded-3xl border border-border/60 bg-background/60 p-5 shadow-sm">
-            <div className="space-y-2">
+          <aside className="mt-6 flex flex-col gap-4 lg:mt-0 lg:sticky lg:top-6 lg:max-h-[calc(100vh-3rem)]">
+            <div className="space-y-2 lg:shrink-0">
               <h2 className="text-sm font-semibold">Vista previa Markdown</h2>
               <p className="text-sm text-muted-foreground">
                 El reporte se actualiza en vivo con lo que completes arriba.
@@ -85,9 +90,8 @@ export function BugReportForm({
             <BugReportPreview
               values={watchedValues}
               headerVariant={watchedValues.headerVariant ?? 0}
-              className="rounded-xl border border-border/70 bg-card/70 p-4"
+              className="flex flex-col lg:min-h-0 lg:flex-1"
             />
-          </div>
           </aside>
         ) : null}
       </div>
