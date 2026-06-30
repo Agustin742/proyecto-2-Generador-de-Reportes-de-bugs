@@ -31,11 +31,21 @@ export function RootLayout() {
           <div className="ml-auto flex items-center gap-6 font-mono text-xs uppercase tracking-[0.16em]">
             <NavLink
               to="/"
+              end
               className={({ isActive }) =>
                 `transition-colors hover:text-primary ${isActive ? "text-foreground" : "text-muted-foreground"}`
               }
             >
               Inicio
+            </NavLink>
+
+            <NavLink
+              to="/reportes"
+              className={({ isActive }) =>
+                `transition-colors hover:text-primary ${isActive ? "text-foreground" : "text-muted-foreground"}`
+              }
+            >
+              Reportes
             </NavLink>
             {/* Aca se deben poner las otras paginas */}
 

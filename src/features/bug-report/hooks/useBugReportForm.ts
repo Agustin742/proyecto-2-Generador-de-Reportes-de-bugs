@@ -3,31 +3,47 @@ import {
   bugReportSchema,
   type BugReportFormValues,
 } from "@/features/bug-report/schema";
-import { useBugReportStore } from "@/features/bug-report/store";
+import { useBugReportStore, type SavedReport } from "@/features/bug-report/store";
 import { getDetectedEnvironment } from "@/features/bug-report/utils/detectEnvironment";
 import { useEffect, useRef, useState } from "react";
-import { useForm, useWatch } from "react-hook-form";
+import { useForm, useWatch, type DefaultValues } from "react-hook-form";
 
-export function useBugReportForm() {
+const EMPTY_DEFAULTS: DefaultValues<BugReportFormValues> = {
+  title: "",
+  description: "",
+  steps: "",
+  expectedResult: "",
+  actualResult: "",
+  severity: undefined,
+  priority: undefined,
+  environment: "",
+  tone: undefined,
+  headerVariant: 0,
+};
+
+export type UseBugReportFormOptions = {
+  mode?: "create" | "edit";
+  // Requerido en modo "edit": precarga los valores y referencia el id a actualizar.
+  report?: SavedReport;
+  // Callback tras guardar (p. ej. cerrar el modal de edición).
+  onSaved?: () => void;
+};
+
+export function useBugReportForm({
+  mode = "create",
+  report,
+  onSaved,
+}: UseBugReportFormOptions = {}) {
   const addReport = useBugReportStore((state) => state.addReport);
+  const updateReport = useBugReportStore((state) => state.updateReport);
   const [saveFeedback, setSaveFeedback] = useState<string | null>(null);
   const feedbackTimeoutRef = useRef<number | null>(null);
 
   const form = useForm<BugReportFormValues>({
     mode: "onChange",
     resolver: zodResolver(bugReportSchema),
-    defaultValues: {
-      title: "",
-      description: "",
-      steps: "",
-      expectedResult: "",
-      actualResult: "",
-      severity: undefined,
-      priority: undefined,
-      environment: "",
-      tone: undefined,
-      headerVariant: 0,
-    },
+    defaultValues:
+      mode === "edit" && report ? report.values : EMPTY_DEFAULTS,
   });
 
   const watchedValues = useWatch({
@@ -65,6 +81,12 @@ export function useBugReportForm() {
   }
 
   function onSubmit(data: BugReportFormValues) {
+    if (mode === "edit" && report) {
+      updateReport(report.id, data);
+      onSaved?.();
+      return;
+    }
+
     addReport(data);
     form.reset();
     showSaveFeedback("Reporte guardado correctamente.");

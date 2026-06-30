@@ -6,12 +6,25 @@ import { BugReportGeneralSection } from "@/features/bug-report/components/sectio
 import { BugReportReproductionSection } from "@/features/bug-report/components/sections/BugReportReproductionSection";
 import { BugReportReviewSection } from "@/features/bug-report/components/sections/BugReportReviewSection";
 import { TemplateSelector } from "@/features/bug-report/components/TemplateSelector";
-import { useBugReportForm } from "@/features/bug-report/hooks/useBugReportForm";
+import {
+  useBugReportForm,
+  type UseBugReportFormOptions,
+} from "@/features/bug-report/hooks/useBugReportForm";
 
 import { Form } from "@/shared/components/ui/form";
 import { Toast } from "@/shared/components/ui/toast";
 
-export function BugReportForm() {
+type BugReportFormProps = UseBugReportFormOptions & {
+  // Oculta la columna de preview (el modal de edición ya muestra el detalle).
+  showPreview?: boolean;
+};
+
+export function BugReportForm({
+  mode,
+  report,
+  onSaved,
+  showPreview = true,
+}: BugReportFormProps = {}) {
   const {
     form,
     watchedValues,
@@ -20,14 +33,18 @@ export function BugReportForm() {
     onSubmit,
     handleDetectEnvironment,
     handleClearForm,
-  } = useBugReportForm();
+  } = useBugReportForm({ mode, report, onSaved });
 
   return (
     <Form {...form}>
       <div className="mx-auto lg:flex lg:items-start lg:gap-6">
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="w-full space-y-8 rounded-lg border border-border bg-card/60 p-6 lg:max-w-2xl"
+          className={
+            showPreview
+              ? "w-full space-y-8 rounded-lg border border-border bg-card/60 p-6 lg:max-w-2xl"
+              : "w-full space-y-8"
+          }
         >
           <RequiredFieldsNote />
 
@@ -49,10 +66,14 @@ export function BugReportForm() {
             form={form}
             values={watchedValues}
             onClearForm={handleClearForm}
+            submitLabel={
+              mode === "edit" ? "Guardar cambios" : "Crear Reporte de Bug"
+            }
           />
         </form>
 
-        <aside className="mt-6 lg:mt-0 lg:w-1/3 lg:sticky lg:top-6">
+        {showPreview ? (
+          <aside className="mt-6 lg:mt-0 lg:w-1/3 lg:sticky lg:top-6">
           <div className="space-y-4 rounded-3xl border border-border/60 bg-background/60 p-5 shadow-sm">
             <div className="space-y-2">
               <h2 className="text-sm font-semibold">Vista previa Markdown</h2>
@@ -67,7 +88,8 @@ export function BugReportForm() {
               className="rounded-xl border border-border/70 bg-card/70 p-4"
             />
           </div>
-        </aside>
+          </aside>
+        ) : null}
       </div>
 
       {saveFeedback ? (

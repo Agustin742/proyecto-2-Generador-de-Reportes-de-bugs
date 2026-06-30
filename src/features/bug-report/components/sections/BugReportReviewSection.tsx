@@ -10,12 +10,14 @@ type BugReportReviewSectionProps = {
   form: UseFormReturn<BugReportFormValues>;
   values: Partial<BugReportFormValues>;
   onClearForm: () => void;
+  submitLabel?: string;
 };
 
 export function BugReportReviewSection({
   form,
   values,
   onClearForm,
+  submitLabel = "Crear Reporte de Bug",
 }: BugReportReviewSectionProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const dialogTitleId = useId();
@@ -47,7 +49,7 @@ export function BugReportReviewSection({
             className="w-full sm:w-auto sm:order-2"
             disabled={!form.formState.isValid}
           >
-            Crear Reporte de Bug
+            {submitLabel}
           </Button>
 
           <Button
