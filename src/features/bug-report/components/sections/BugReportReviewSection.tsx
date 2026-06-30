@@ -3,7 +3,7 @@ import { BugReportQualitySuggestions } from "@/features/bug-report/components/Bu
 import type { BugReportFormValues } from "@/features/bug-report/schema";
 
 import { Button } from "@/shared/components/ui/button";
-import { useEffect, useId, useState } from "react";
+import { useId, useRef } from "react";
 import type { UseFormReturn } from "react-hook-form";
 
 type BugReportReviewSectionProps = {
@@ -17,31 +17,13 @@ export function BugReportReviewSection({
   values,
   onClearForm,
 }: BugReportReviewSectionProps) {
-  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const dialogTitleId = useId();
   const dialogDescriptionId = useId();
 
-  useEffect(() => {
-    if (!isConfirmOpen) {
-      return;
-    }
-
-    function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        setIsConfirmOpen(false);
-      }
-    }
-
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [isConfirmOpen]);
-
   function handleConfirmClear() {
     onClearForm();
-    setIsConfirmOpen(false);
+    dialogRef.current?.close();
   }
 
   return (
@@ -71,7 +53,7 @@ export function BugReportReviewSection({
           <Button
             type="button"
             variant="outline"
-            onClick={() => setIsConfirmOpen(true)}
+            onClick={() => dialogRef.current?.showModal()}
             className="w-full sm:w-auto sm:order-1"
           >
             Limpiar formulario
@@ -79,52 +61,40 @@ export function BugReportReviewSection({
         </div>
       </div>
 
-      {isConfirmOpen ? (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4"
-          role="presentation"
-          onClick={() => setIsConfirmOpen(false)}
-        >
-          <div
-            role="alertdialog"
-            aria-modal="true"
-            aria-labelledby={dialogTitleId}
-            aria-describedby={dialogDescriptionId}
-            className="w-full max-w-md rounded-xl border border-border bg-background p-5 shadow-lg"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <div className="space-y-2">
-              <h3 id={dialogTitleId} className="text-base font-semibold">
-                ¿Borrar datos cargados?
-              </h3>
-              <p
-                id={dialogDescriptionId}
-                className="text-sm text-muted-foreground"
-              >
-                Esta acción limpiará el formulario actual.
-              </p>
-            </div>
-
-            <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:justify-end">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => setIsConfirmOpen(false)}
-                autoFocus
-              >
-                Cancelar
-              </Button>
-              <Button
-                type="button"
-                variant="destructive"
-                onClick={handleConfirmClear}
-              >
-                Borrar
-              </Button>
-            </div>
-          </div>
+      <dialog
+        ref={dialogRef}
+        role="alertdialog"
+        aria-labelledby={dialogTitleId}
+        aria-describedby={dialogDescriptionId}
+        className="m-auto w-full max-w-md rounded-xl border border-border bg-background p-5 text-foreground shadow-lg backdrop:bg-black/40"
+      >
+        <div className="space-y-2">
+          <h3 id={dialogTitleId} className="text-base font-semibold">
+            ¿Borrar datos cargados?
+          </h3>
+          <p id={dialogDescriptionId} className="text-sm text-muted-foreground">
+            Esta acción limpiará el formulario actual.
+          </p>
         </div>
-      ) : null}
+
+        <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:justify-end">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => dialogRef.current?.close()}
+            autoFocus
+          >
+            Cancelar
+          </Button>
+          <Button
+            type="button"
+            variant="destructive"
+            onClick={handleConfirmClear}
+          >
+            Borrar
+          </Button>
+        </div>
+      </dialog>
     </section>
   );
 }

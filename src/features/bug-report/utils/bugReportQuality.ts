@@ -60,17 +60,17 @@ export function normalizeOptionalString(value?: string) {
   return value ?? "";
 }
 
-export function normalizeComparableText(value?: string) {
+function normalizeComparableText(value?: string) {
   return normalizeOptionalString(value).trim().toLowerCase();
 }
 
-export function hasListedSteps(steps?: string) {
+function hasListedSteps(steps?: string) {
   return normalizeOptionalString(steps)
     .split(/\r?\n/)
     .some((line) => /^(\s*(\d+[.)]|[-*]))\s+/.test(line));
 }
 
-export function isGenericEnvironment(environment?: string) {
+function isGenericEnvironment(environment?: string) {
   const normalizedEnvironment = normalizeComparableText(environment);
 
   if (!normalizedEnvironment) {

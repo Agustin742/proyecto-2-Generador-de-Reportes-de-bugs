@@ -26,6 +26,7 @@ export function useBugReportForm() {
       priority: undefined,
       environment: "",
       tone: undefined,
+      headerVariant: 0,
     },
   });
 

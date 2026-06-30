@@ -1,4 +1,3 @@
-import React from "react";
 import type { UseFormSetValue } from "react-hook-form";
 import type { BugReportFormValues } from "../schema";
 import type { BugTemplate } from "../types";
@@ -9,7 +8,7 @@ interface TemplateSelectorProps {
   setValue: UseFormSetValue<BugReportFormValues>;
 }
 
-export const TemplateSelector: React.FC<TemplateSelectorProps> = ({ setValue }) => {
+export function TemplateSelector({ setValue }: TemplateSelectorProps) {
   const handleSelect = (template: BugTemplate) => {
     const fields = applyTemplate(template);
     Object.entries(fields).forEach(([key, value]) => {
@@ -59,4 +58,4 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({ setValue }) 
       </div>
     </div>
   );
-};
+}

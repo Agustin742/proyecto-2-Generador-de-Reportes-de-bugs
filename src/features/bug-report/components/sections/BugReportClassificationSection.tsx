@@ -1,6 +1,8 @@
 import { RequiredMark } from "@/features/bug-report/components/RequiredMark";
 import { SeverityPriorityHelp } from "@/features/bug-report/components/SeverityPriorityHelp";
+import { ToneSelector } from "@/features/bug-report/components/ToneSelector";
 import type { BugReportFormValues } from "@/features/bug-report/schema";
+import type { HeaderVariant } from "@/features/bug-report/utils/toneTemplates";
 
 import {
   FormControl,
@@ -97,29 +99,36 @@ export function BugReportClassificationSection({
           />
         </div>
 
+        <ToneSelector control={form.control} />
+
         <FormField
           control={form.control}
-          name="tone"
+          name="headerVariant"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>
-                Tono
-                <RequiredMark />
-              </FormLabel>
-              <Select onValueChange={field.onChange} value={field.value ?? ""}>
+              <FormLabel>Variante de encabezados</FormLabel>
+              <Select
+                onValueChange={(value) =>
+                  field.onChange(Number(value) as HeaderVariant)
+                }
+                value={String(field.value ?? 0)}
+              >
                 <FormControl>
-                  <SelectTrigger aria-required="true">
-                    <SelectValue placeholder="Seleccioná el estilo" />
+                  <SelectTrigger>
+                    <SelectValue placeholder="Seleccioná la variante" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="formal">Formal</SelectItem>
-                  <SelectItem value="direct">Directo</SelectItem>
-                  <SelectItem value="detailed">Detallado</SelectItem>
+                  <SelectItem value="0">Variante 1</SelectItem>
+                  <SelectItem value="1">Variante 2</SelectItem>
+                  <SelectItem value="2">Variante 3</SelectItem>
+                  <SelectItem value="3">Variante 4</SelectItem>
+                  <SelectItem value="4">Variante 5</SelectItem>
+                  <SelectItem value="5">Variante 6</SelectItem>
                 </SelectContent>
               </Select>
               <FormDescription>
-                Elegí cómo querés que se redacte el reporte final.
+                Cambia la redacción de los títulos de cada sección del reporte.
               </FormDescription>
               <FormMessage />
             </FormItem>

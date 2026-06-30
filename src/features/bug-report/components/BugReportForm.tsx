@@ -63,6 +63,7 @@ export function BugReportForm() {
 
             <BugReportPreview
               values={watchedValues}
+              headerVariant={watchedValues.headerVariant ?? 0}
               className="rounded-xl border border-border/70 bg-white p-4"
             />
           </div>
@@ -71,9 +72,8 @@ export function BugReportForm() {
 
       {saveFeedback ? (
         <div className="fixed right-4 bottom-4 z-50 w-[min(24rem,calc(100vw-2rem))]">
-          <div
+          <output
             className="flex items-start justify-between gap-3 rounded-lg border border-border/60 bg-background p-3 text-sm shadow-lg"
-            role="status"
             aria-live="polite"
           >
             <span>{saveFeedback}</span>
@@ -86,7 +86,7 @@ export function BugReportForm() {
             >
               Cerrar
             </Button>
-          </div>
+          </output>
         </div>
       ) : null}
     </Form>

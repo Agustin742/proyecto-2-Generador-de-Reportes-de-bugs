@@ -1,26 +1,56 @@
-import React from "react";
-import type { UseFormRegister } from "react-hook-form";
-import type { BugReport } from "../types";
+import type { Control } from "react-hook-form";
 
-interface ToneSelectorProps {
-  register: UseFormRegister<BugReport>;
-}
+import { RequiredMark } from "@/features/bug-report/components/RequiredMark";
+import type { BugReportFormValues } from "@/features/bug-report/schema";
+import {
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/shared/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/shared/components/ui/select";
 
-export const ToneSelector: React.FC<ToneSelectorProps> = ({ register }) => {
-  return (
-    <div className="mb-4">
-      <label htmlFor="tone" className="block text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
-        Tono de Redacción [cite: 1054]
-      </label>
-      <select
-        id="tone"
-        {...register("tone")}
-        className="w-full p-2 border rounded-md text-xs bg-white dark:bg-zinc-800 dark:text-white"
-      >
-        <option value="formal"> Formal [cite: 1054]</option>
-        <option value="direct"> Directo [cite: 1054]</option>
-        <option value="detailed"> Detallado [cite: 1054]</option>
-      </select>
-    </div>
-  );
+type ToneSelectorProps = {
+  control: Control<BugReportFormValues>;
 };
+
+export function ToneSelector({ control }: ToneSelectorProps) {
+  return (
+    <FormField
+      control={control}
+      name="tone"
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>
+            Tono
+            <RequiredMark />
+          </FormLabel>
+          <Select onValueChange={field.onChange} value={field.value ?? ""}>
+            <FormControl>
+              <SelectTrigger aria-required="true">
+                <SelectValue placeholder="Seleccioná el estilo" />
+              </SelectTrigger>
+            </FormControl>
+            <SelectContent>
+              <SelectItem value="formal">Formal</SelectItem>
+              <SelectItem value="direct">Directo</SelectItem>
+              <SelectItem value="detailed">Detallado</SelectItem>
+            </SelectContent>
+          </Select>
+          <FormDescription>
+            Elegí cómo querés que se redacte el reporte final.
+          </FormDescription>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  );
+}
