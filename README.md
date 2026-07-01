@@ -14,7 +14,7 @@ The application aims to solve a common problem in development, support, and test
 
 ## Demo and Repository
 
-- **Deploy:** https://bugnet-report-generator.vercel.app/
+- **Deploy:** [https://bugnet-report-generator.vercel.app/](https://bugnet-report-generator.vercel.app/)
 - **Repository:** https://github.com/Agustin742/proyecto-2-Generador-de-Reportes-de-bugs
 
 ---
