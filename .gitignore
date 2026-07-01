@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+AGENTS.md
+CODE-REVIEW.md
+REPORTE-PROYECTO.md
+template
+doc
